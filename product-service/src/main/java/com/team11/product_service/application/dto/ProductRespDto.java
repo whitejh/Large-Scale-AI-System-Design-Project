@@ -1,5 +1,6 @@
-package com.team11.service.application.dto;
+package com.team11.product_service.application.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,5 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductRespDto {
 }

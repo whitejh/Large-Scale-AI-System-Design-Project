@@ -1,4 +1,4 @@
-package com.team11.service.presentation.request;
+package com.team11.product_service.presentation.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
