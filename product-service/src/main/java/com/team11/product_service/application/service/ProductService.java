@@ -35,6 +35,11 @@ public class ProductService {
                 ()-> new IllegalArgumentException("수정하려는 상품이 존재하지 않습니다.")
         );
 
+        product.setProductName(req.getProductName());
+        product.setStock(req.getStock());
+
+        productRepository.save(product);
+
         return ProductRespDto.from(productRepository.save(product));
     }
 
