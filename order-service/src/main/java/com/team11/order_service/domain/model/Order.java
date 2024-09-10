@@ -1,15 +1,13 @@
 package com.team11.order_service.domain.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
@@ -18,6 +16,9 @@ public class Order extends BaseEntity {
     @Id
     @Column(name="order_id")
     private UUID orderId = UUID.randomUUID();
+
+    @Column(name="username")
+    private String userName;
 
     @Column(name="delivery_id")
     private UUID deliveryId = UUID.randomUUID();
@@ -35,6 +36,6 @@ public class Order extends BaseEntity {
     private UUID receiveCompanyId;
 
     @Column(name="is_deleted")
-    private boolean deleted;
+    private boolean deleted=false;
 
 }

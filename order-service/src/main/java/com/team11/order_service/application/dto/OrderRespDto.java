@@ -12,6 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class OrderRespDto {
     private UUID orderId;
+    private String userName;
     private UUID deliveryId;
     private UUID productId;
     private int quantity;
@@ -21,6 +22,7 @@ public class OrderRespDto {
     public static OrderRespDto from(Order order) {
         return OrderRespDto.builder()
                 .orderId(order.getOrderId())
+                .userName(order.getUserName())
                 .deliveryId(order.getDeliveryId())
                 .productId(order.getProductId())
                 .quantity(order.getQuantity())

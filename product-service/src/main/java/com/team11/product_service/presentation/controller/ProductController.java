@@ -58,7 +58,7 @@ public class ProductController {
     }
 
     @PutMapping("/stock/{productId}")
-    public void updateStockByProductId(@PathVariable UUID productId, int quantity){
-        productService.updateStock(productId, quantity);
+    public void updateStockByProductId(@PathVariable UUID productId, int stock){
+        productService.updateStock(productId, stock);
     }
 }

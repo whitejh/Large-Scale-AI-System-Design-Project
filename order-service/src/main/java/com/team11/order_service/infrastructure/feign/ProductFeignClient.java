@@ -13,5 +13,5 @@ public interface ProductFeignClient {
     int getStockByProductId(@PathVariable("productId") UUID productId);
 
     @PutMapping("/products/stock/{productId}")
-    void updateStockByProductId(@PathVariable("productId") UUID productId, int quantity);
+    void updateStockByProductId(@PathVariable("productId") UUID productId, int stock);
 }

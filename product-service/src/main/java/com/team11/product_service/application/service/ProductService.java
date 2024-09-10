@@ -73,13 +73,12 @@ public class ProductService {
     }
 
     // 상품 재고 업데이트 (feignClient)
-    public void updateStock(UUID productId, int quantity) {
+    public void updateStock(UUID productId, int stock) {
         Product product = productRepository.findByProductIdAndDeletedIsFalse(productId).orElseThrow(
                 ()-> new IllegalArgumentException("해당 상품을 찾을 수 없습니다.")
         );
 
-        int stock = product.getStock();
-        product.setStock(stock - quantity);
+        product.setStock(stock);
         productRepository.save(product);
     }
 
