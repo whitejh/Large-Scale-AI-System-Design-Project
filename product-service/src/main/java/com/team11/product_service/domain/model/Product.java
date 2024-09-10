@@ -1,13 +1,33 @@
 package com.team11.product_service.domain.model;
 
+import com.team11.product_service.presentation.request.ProductReqDto;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.UUID;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
+@AllArgsConstructor
 @Table(name = "p_products")
-public class Product {
+public class Product extends BaseEntity {
+    @Id
+    @GeneratedValue
+    @Column(name="product_id")
+    private UUID productId = UUID.randomUUID();
+
+    @Column(name="product_name")
+    private String productName;
+
+    @Column(name="company_id")
+    private UUID companyId;
+
+    @Column(name="hub_id")
+    private UUID hubId;
+
+    @Column(name="is_Deleted")
+    private boolean deleted = false;
+
 }
