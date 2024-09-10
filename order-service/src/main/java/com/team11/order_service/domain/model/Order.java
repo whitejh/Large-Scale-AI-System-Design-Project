@@ -17,10 +17,10 @@ import java.util.UUID;
 public class Order extends BaseEntity {
     @Id
     @Column(name="order_id")
-    private UUID orderId;
+    private UUID orderId = UUID.randomUUID();
 
     @Column(name="delivery_id")
-    private UUID deliveryId;
+    private UUID deliveryId = UUID.randomUUID();
 
     @Column(name="product_id")
     private UUID productId;

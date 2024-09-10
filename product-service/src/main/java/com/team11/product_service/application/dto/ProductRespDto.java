@@ -15,6 +15,7 @@ public class ProductRespDto {
     private String productName;
     private UUID companyId;
     private UUID hubId;
+    private int stock;
 
     public static ProductRespDto from(Product product) {
         return ProductRespDto.builder()
@@ -22,6 +23,7 @@ public class ProductRespDto {
                 .productName(product.getProductName())
                 .companyId(product.getCompanyId())
                 .hubId(product.getHubId())
+                .stock(product.getStock())
                 .build();
     }
 }

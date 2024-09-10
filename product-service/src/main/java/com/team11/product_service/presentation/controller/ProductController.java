@@ -51,4 +51,14 @@ public class ProductController {
     public ResponseEntity<ProductRespDto> searchProduct(@PathVariable UUID productId){
         return ResponseEntity.ok(productService.searchProduct(productId));
     }
+
+    @GetMapping("/stock/{productId}")
+    public int getStockByProductId(@PathVariable UUID productId){
+        return productService.getStock(productId);
+    }
+
+    @PutMapping("/stock/{productId}")
+    public void updateStockByProductId(@PathVariable UUID productId, int quantity){
+        productService.updateStock(productId, quantity);
+    }
 }

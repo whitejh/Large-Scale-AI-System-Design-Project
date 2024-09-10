@@ -66,4 +66,21 @@ public class ProductService {
         return ProductRespDto.from(product);
     }
 
+    // 상품 재고 확인 (feignClient)
+    public int getStock(UUID productId) {
+        int stock = productRepository.findStockByProductId(productId);
+        return stock;
+    }
+
+    // 상품 재고 업데이트 (feignClient)
+    public void updateStock(UUID productId, int quantity) {
+        Product product = productRepository.findByProductIdAndDeletedIsFalse(productId).orElseThrow(
+                ()-> new IllegalArgumentException("해당 상품을 찾을 수 없습니다.")
+        );
+
+        int stock = product.getStock();
+        product.setStock(stock - quantity);
+        productRepository.save(product);
+    }
+
 }

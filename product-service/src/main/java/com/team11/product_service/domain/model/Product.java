@@ -8,6 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
@@ -28,5 +29,8 @@ public class Product extends BaseEntity {
 
     @Column(name="is_Deleted")
     private boolean deleted = false;
+
+    @Column(name="stock")
+    private int stock;
 
 }

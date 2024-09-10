@@ -18,14 +18,14 @@ public class OrderReqDto {
     private UUID supplyCompany;
     private UUID receiveCompany;
 
-    public static Order toOrder(OrderReqDto redDto) {
+    public static Order toOrder(OrderReqDto reqDtoDto) {
         return Order.builder()
-                .orderId(redDto.getOrderId())
-                .deliveryId(redDto.getDeliveryId())
-                .productId(redDto.getProductId())
-                .quantity(redDto.getQuantity())
-                .supplyCompanyId(redDto.getSupplyCompany())
-                .receiveCompanyId(redDto.getReceiveCompany())
+                .orderId(reqDtoDto.getOrderId())
+                .deliveryId(reqDtoDto.getDeliveryId())
+                .productId(reqDtoDto.getProductId())
+                .quantity(reqDtoDto.getQuantity())
+                .supplyCompanyId(reqDtoDto.getSupplyCompany())
+                .receiveCompanyId(reqDtoDto.getReceiveCompany())
                 .build();
     }
 }

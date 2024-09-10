@@ -15,6 +15,7 @@ public class ProductReqDto {
     private String productName;
     private UUID companyId;
     private UUID hubId;
+    private int stock;
 
     public static Product toProduct(ProductReqDto reqDto) {
         return Product.builder()
@@ -22,6 +23,7 @@ public class ProductReqDto {
                 .productName(reqDto.getProductName())
                 .companyId(reqDto.getCompanyId())
                 .hubId(reqDto.getHubId())
+                .stock(reqDto.getStock())
                 .build();
     }
 }
