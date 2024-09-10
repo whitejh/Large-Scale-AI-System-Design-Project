@@ -14,7 +14,6 @@ import java.util.UUID;
 @Table(name = "p_products")
 public class Product extends BaseEntity {
     @Id
-    @GeneratedValue
     @Column(name="product_id")
     private UUID productId = UUID.randomUUID();
 
