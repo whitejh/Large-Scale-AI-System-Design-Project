@@ -35,7 +35,4 @@ public class Delivery extends BaseEntity {
 
     @Column(name="recipient_slack_id")
     private UUID recipientSlackId;
-
-    @Column(name="is_deleted")
-    private boolean deleted;
 }

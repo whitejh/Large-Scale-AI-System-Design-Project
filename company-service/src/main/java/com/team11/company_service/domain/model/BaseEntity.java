@@ -1,4 +1,4 @@
-package com.team11.delivery_service.domain.model;
+package com.team11.company_service.domain.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

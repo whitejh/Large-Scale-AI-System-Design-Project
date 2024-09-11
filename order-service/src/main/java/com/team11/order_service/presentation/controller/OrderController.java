@@ -36,8 +36,8 @@ public class OrderController {
 
     @Operation(summary="주문 삭제", description="주문을 삭제합니다.")
     @DeleteMapping("/{orderId}")
-    public ResponseEntity<OrderRespDto> deleteOrder(@PathVariable UUID orderId) {
-        return ResponseEntity.ok(orderService.deleteOrder(orderId));
+    public ResponseEntity<OrderRespDto> deleteOrder(@PathVariable UUID orderId, @RequestHeader(name="X-User-Name") String userName) {
+        return ResponseEntity.ok(orderService.deleteOrder(orderId, userName));
     }
 
     @Operation(summary="주문 상세 조회", description="특정 주문을 상세 조회합니다.")

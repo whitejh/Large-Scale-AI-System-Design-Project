@@ -37,8 +37,12 @@ public class BaseEntity {
     @Column(length = 100)
     private String deletedBy;
 
+    @Column(name="is_deleted")
+    private boolean deleted=false;
+
     public void setDeleted(LocalDateTime deletedAt, String deletedBy){
         this.deletedAt = deletedAt;
         this.deletedBy = deletedBy;
+        this.deleted = true;
     }
 }

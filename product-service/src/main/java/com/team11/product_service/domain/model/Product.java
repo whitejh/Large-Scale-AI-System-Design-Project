@@ -27,9 +27,6 @@ public class Product extends BaseEntity {
     @Column(name="hub_id")
     private UUID hubId;
 
-    @Column(name="is_Deleted")
-    private boolean deleted = false;
-
     @Column(name="stock")
     private int stock;
 

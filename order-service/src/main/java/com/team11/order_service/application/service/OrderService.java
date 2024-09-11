@@ -69,7 +69,7 @@ public class OrderService {
     }
 
     // 주문 삭제
-    public OrderRespDto deleteOrder(UUID orderId) {
+    public OrderRespDto deleteOrder(UUID orderId, String userName) {
         Order order = orderRepository.findByOrderIdAndDeletedIsFalse(orderId).orElseThrow(
                 ()-> new IllegalArgumentException("삭제하려는 주문이 존재하지 않습니다.")
         );
@@ -78,8 +78,7 @@ public class OrderService {
 
         productFeignClient.updateStockByProductId(orderId, order.getQuantity() + stock);
 
-        order.setDeleted(LocalDateTime.now(), order.getUserName());
-        order.setDeleted(true);
+        order.setDeleted(LocalDateTime.now(), userName);
 
         orderRepository.save(order);
 

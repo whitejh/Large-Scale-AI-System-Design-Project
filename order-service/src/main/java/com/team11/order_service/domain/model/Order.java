@@ -35,7 +35,4 @@ public class Order extends BaseEntity {
     @Column(name="receive_company_id")
     private UUID receiveCompanyId;
 
-    @Column(name="is_deleted")
-    private boolean deleted=false;
-
 }
