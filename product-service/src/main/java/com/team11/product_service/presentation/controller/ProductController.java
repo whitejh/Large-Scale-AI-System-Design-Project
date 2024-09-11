@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,13 +25,13 @@ public class ProductController {
 
     @Operation(summary="상품 추가", description="업체에 상품을 추가합니다.")
     @PostMapping
-    public ResponseEntity<ProductRespDto> createProduct(@RequestBody ProductReqDto requestDto){
+    public ResponseEntity<ProductRespDto> createProduct(@Validated @RequestBody ProductReqDto requestDto){
         return ResponseEntity.ok(productService.createProduct(requestDto));
     }
 
     @Operation(summary="상품 수정", description="상품의 정보를 수정합니다.")
     @PutMapping("/{productId}")
-    public ResponseEntity<ProductRespDto> updateProduct(@RequestBody ProductReqDto requestDto, @PathVariable UUID productId){
+    public ResponseEntity<ProductRespDto> updateProduct(@Validated @RequestBody ProductReqDto requestDto, @PathVariable UUID productId){
         return ResponseEntity.ok(productService.updateProduct(requestDto, productId));
     }
 
