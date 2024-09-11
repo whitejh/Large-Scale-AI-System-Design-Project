@@ -14,6 +14,7 @@ import java.util.UUID;
 @Table(name = "p_deliveries")
 public class Delivery extends BaseEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name="delivery_id")
     private UUID deliveryId;
 
@@ -35,4 +36,13 @@ public class Delivery extends BaseEntity {
 
     @Column(name="recipient_slack_id")
     private UUID recipientSlackId;
+
+    public Delivery(UUID originHubId, UUID destinationHubId, String deliveryAddress, DeliveryStatusEnum status, String recipientName, UUID recipientSlackId){
+        this.originHubId = originHubId;
+        this.destinationHubId = destinationHubId;
+        this.deliveryAddress = deliveryAddress;
+        this.status = status;
+        this.recipientName = recipientName;
+        this.recipientSlackId = recipientSlackId;
+    }
 }

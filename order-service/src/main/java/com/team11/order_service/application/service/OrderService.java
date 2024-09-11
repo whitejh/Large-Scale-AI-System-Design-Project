@@ -3,14 +3,17 @@ package com.team11.order_service.application.service;
 import com.team11.order_service.application.dto.OrderRespDto;
 import com.team11.order_service.domain.model.Order;
 import com.team11.order_service.domain.repository.OrderRepository;
+import com.team11.order_service.infrastructure.feign.DeliveryFeignClient;
 import com.team11.order_service.infrastructure.feign.ProductFeignClient;
 import com.team11.order_service.presentation.request.OrderReqDto;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -22,6 +25,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     private ProductFeignClient productFeignClient;
+    private DeliveryFeignClient deliveryFeignClient;
 
     // 주문 생성
     public OrderRespDto createOrder(OrderReqDto reqDto, String userName) {
@@ -39,6 +43,20 @@ public class OrderService {
             throw new IllegalArgumentException("재고가 부족합니다.");
 
         }
+
+        UUID supplyCompanyId = order.getSupplyCompanyId();
+        UUID receiveCompanyId = order.getReceiveCompanyId();
+        String recipientName = reqDto.getRecipientName();
+        UUID recipientSlackId = reqDto.getRecipientSlackId();
+
+        // 배송 생성
+        UUID deliveryId = deliveryFeignClient.createDelivery(supplyCompanyId, receiveCompanyId, recipientName, recipientSlackId);
+
+        if(Objects.isNull(deliveryId)){
+            throw new IllegalArgumentException("배송 생성에 실패했습니다.");
+        }
+
+        order.setDeliveryId(deliveryId);
 
         orderRepository.save(order);
 
@@ -94,10 +112,10 @@ public class OrderService {
         return OrderRespDto.from(order);
     }
 
-    // 주문 전체 조회
-    public List<OrderRespDto> getOrders(String userName) {
-        List<Order> orderList = orderRepository.findAllByUserNameAndDeletedIsFalse(userName).orElseThrow(
-                ()-> new IllegalArgumentException("해당 사용자의 주문 내역이 없습니다.")
+    // 주문 전체 조회(업체 별)
+    public List<OrderRespDto> getOrdersOfCompany(UUID companyId) {
+        List<Order> orderList = orderRepository.findAllBySupplyCompanyIdOrReceiveCompanyIdAndDeletedIsFalse(companyId).orElseThrow(
+                ()-> new IllegalArgumentException("해당 업체의 주문이 존재하지 않습니다.")
         );
 
         return orderList.stream().map(OrderRespDto::from).collect(Collectors.toList());

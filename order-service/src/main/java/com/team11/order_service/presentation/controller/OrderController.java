@@ -46,10 +46,10 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrderDetails(orderId));
     }
 
-    @Operation(summary="주문 전체 조회", description="사용자의 주문을 전체 조회합니다.")
-    @GetMapping
-    public ResponseEntity<List<OrderRespDto>> getAllOrders(@RequestHeader(name="X-User-Name") String userName) {
-        return ResponseEntity.ok(orderService.getOrders(userName));
+    @Operation(summary="주문 전체 조회(업체 별)", description="해당 업체의 주문들을 전체 조회합니다.")
+    @GetMapping("/{companyId}")
+    public ResponseEntity<List<OrderRespDto>> getOrdersOfCompany(@PathVariable UUID companyId) {
+        return ResponseEntity.ok(orderService.getOrdersOfCompany(companyId));
     }
 
 

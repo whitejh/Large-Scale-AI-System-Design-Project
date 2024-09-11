@@ -2,6 +2,7 @@ package com.team11.product_service.domain.model;
 
 import com.team11.product_service.presentation.request.ProductReqDto;
 import jakarta.persistence.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.*;
 
 import java.util.UUID;
@@ -15,8 +16,9 @@ import java.util.UUID;
 @Table(name = "p_products")
 public class Product extends BaseEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name="product_id")
-    private UUID productId = UUID.randomUUID();
+    private UUID productId;
 
     @Column(name="product_name")
     private String productName;
@@ -29,5 +31,6 @@ public class Product extends BaseEntity {
 
     @Column(name="stock")
     private int stock;
+
 
 }

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Tag(name="Company", description="Company API")
@@ -51,6 +52,26 @@ public class CompanyController {
     public ResponseEntity<CompanyRespDto> getCompanyDetails(@PathVariable UUID companyId) {
         return ResponseEntity.ok(companyService.getCompanyDetails(companyId));
     }
+
+    @Operation(summary="업체 ID 확인", description="업체의 존재 여부를 확인합니다.")
+    @GetMapping("/checkCompany/{companyId}")
+    public boolean checkCompany(@PathVariable UUID companyId) {
+        return companyService.checkCompany(companyId);
+    }
+
+    @Operation(summary="업체의 소속 허브 확인", description="업체가 속한 허브를 반환합니다.")
+    @GetMapping("/getHub/{companyId}")
+    public UUID getHubIdByCompanyId(@PathVariable UUID companyId){
+        return companyService.getHubIdByCompanyId(companyId);
+    }
+
+    @Operation(summary="업체 주소 확인", description="배송지로 사용될 업체의 주소를 반환합니다.")
+    @GetMapping("/getCompanyAddy/{companyId}")
+    public String getCompanyAddy(@PathVariable UUID companyId) {
+        return companyService.getCompanyAddy(companyId);
+    }
+
+
 
 
 }

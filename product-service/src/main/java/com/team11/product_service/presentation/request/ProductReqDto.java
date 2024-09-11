@@ -19,7 +19,6 @@ public class ProductReqDto {
 
     public static Product toProduct(ProductReqDto reqDto) {
         return Product.builder()
-                .productId(reqDto.getProductId())
                 .productName(reqDto.getProductName())
                 .companyId(reqDto.getCompanyId())
                 .hubId(reqDto.getHubId())

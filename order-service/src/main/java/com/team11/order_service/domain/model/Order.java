@@ -14,14 +14,15 @@ import java.util.UUID;
 @Table(name = "p_orders")
 public class Order extends BaseEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name="order_id")
-    private UUID orderId = UUID.randomUUID();
+    private UUID orderId;
 
     @Column(name="username")
     private String userName;
 
     @Column(name="delivery_id")
-    private UUID deliveryId = UUID.randomUUID();
+    private UUID deliveryId;
 
     @Column(name="product_id")
     private UUID productId;

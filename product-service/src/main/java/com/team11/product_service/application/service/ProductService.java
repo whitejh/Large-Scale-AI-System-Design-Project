@@ -3,6 +3,7 @@ package com.team11.product_service.application.service;
 import com.team11.product_service.application.dto.ProductRespDto;
 import com.team11.product_service.domain.model.Product;
 import com.team11.product_service.domain.repository.ProductRepository;
+import com.team11.product_service.infrastructure.feign.CompanyFeignClient;
 import com.team11.product_service.presentation.request.ProductReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +21,18 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
+    private final CompanyFeignClient companyFeignClient;
+
     // 상품 추가
     public ProductRespDto createProduct(ProductReqDto req) {
         Product product = ProductReqDto.toProduct(req);
+
+        // 업체 존재 확인 판별
+        if(!companyFeignClient.checkCompany(req.getCompanyId())) {
+            throw new IllegalArgumentException("상품을 등록하려는 업체가 존재하지 않습니다.");
+        }
+
+        // 허브 존재 확인 판별
 
         return ProductRespDto.from(productRepository.save(product));
     }
@@ -73,7 +83,12 @@ public class ProductService {
 
     // 상품 재고 확인 (feignClient)
     public int getStock(UUID productId) {
-        int stock = productRepository.findStockByProductId(productId);
+        Product product = productRepository.findByProductIdAndDeletedIsFalse(productId).orElseThrow(
+                ()-> new IllegalArgumentException("상품이 존재하지 않아 재고를 확인할 수 없습니다.")
+        );
+
+        int stock = product.getStock();
+
         return stock;
     }
 

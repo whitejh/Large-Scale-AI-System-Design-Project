@@ -2,7 +2,7 @@ spring:
   profiles:
     default: dev
   application:
-    name: service
+    name: product-service
   jpa:
     hibernate:
       ddl-auto: update
@@ -14,7 +14,7 @@ spring:
         use_sql_comments: true
         highlight_sql: true
 server:
-  port: 19092
+  port: 19094
   servlet:
     context-path: /api
 

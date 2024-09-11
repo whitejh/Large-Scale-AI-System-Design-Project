@@ -41,7 +41,7 @@ public class ProductController {
     }
 
     @Operation(summary="상품 전제 조회", description="특정 업체의 전체 상품을 조회합니다.")
-    @GetMapping("/{companyId}")
+    @GetMapping("/search/{companyId}")
     public ResponseEntity<List<ProductRespDto>> getProducts(@PathVariable UUID companyId){
         return ResponseEntity.ok(productService.getAllProducts(companyId));
     }
@@ -52,11 +52,13 @@ public class ProductController {
         return ResponseEntity.ok(productService.searchProduct(productId));
     }
 
+    @Operation(summary="상품 재고 확인", description="특정 상품의 재고를 반환합니다.")
     @GetMapping("/stock/{productId}")
     public int getStockByProductId(@PathVariable UUID productId){
         return productService.getStock(productId);
     }
 
+    @Operation(summary="상품 재고 갱신", description="특정 상품의 재고를 갱신합니다.")
     @PutMapping("/stock/{productId}")
     public void updateStockByProductId(@PathVariable UUID productId, int stock){
         productService.updateStock(productId, stock);

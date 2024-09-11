@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @Tag(name="Delivery", description="Delivery API")
 @RestController
 @RequestMapping("/deliveries")
@@ -19,6 +21,11 @@ public class DeliveryController {
     private final DeliveryService deliveryService;
 
     // 배송 생성
+    @Operation(summary="배송 생성", description="새 배송을 생성합니다.")
+    @PostMapping
+    public UUID createDelivery(UUID supplyCompanyId, UUID receiveCompanyId, String recipientName, UUID recipientSlackId){
+        return deliveryService.createDelivery(supplyCompanyId, receiveCompanyId, recipientName, recipientSlackId);
+    }
 
 
     // 배송 수정

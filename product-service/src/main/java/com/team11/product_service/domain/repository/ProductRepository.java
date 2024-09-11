@@ -15,5 +15,4 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
 
     Optional<Product> findByProductIdAndDeletedIsFalse(UUID productId);
     Optional<List<Product>> findAllByCompanyIdAndDeletedIsFalse(UUID companyId);
-    int findStockByProductId(UUID productId);
 }
