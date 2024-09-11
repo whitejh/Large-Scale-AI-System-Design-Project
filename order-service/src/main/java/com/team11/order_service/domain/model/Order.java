@@ -18,9 +18,6 @@ public class Order extends BaseEntity {
     @Column(name="order_id")
     private UUID orderId;
 
-    @Column(name="username")
-    private String userName;
-
     @Column(name="delivery_id")
     private UUID deliveryId;
 

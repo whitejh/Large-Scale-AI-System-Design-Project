@@ -24,35 +24,32 @@ public class OrderController {
 
     @Operation(summary="주문 생성", description="새 주문을 생성합니다.")
     @PostMapping
-    public ResponseEntity<OrderRespDto> createOrder(OrderReqDto orderReqDto, @RequestHeader(name="X-User-Name") String userName) {
-        return ResponseEntity.ok(orderService.createOrder(orderReqDto, userName));
+    public ResponseEntity<OrderRespDto> createOrder(OrderReqDto orderReqDto) {
+        return ResponseEntity.ok(orderService.createOrder(orderReqDto));
     }
 
-    @Operation(summary="주문 수정", description="주문을 수정합니다.")
+    @Operation(summary="주문 수정 - 재고 변경", description="주문을 수정합니다.")
     @PutMapping("/{orderId}")
-    public ResponseEntity<OrderRespDto> updateOrder(@PathVariable UUID orderId, OrderReqDto orderReqDto) {
-        return ResponseEntity.ok(orderService.updateOrder(orderId, orderReqDto));
+    public ResponseEntity<OrderRespDto> updateOrder(@PathVariable(name="orderId") UUID orderId, @RequestParam(name="newQuantity") int newQuantity) {
+        return ResponseEntity.ok(orderService.updateOrder(orderId, newQuantity));
     }
 
     @Operation(summary="주문 삭제", description="주문을 삭제합니다.")
     @DeleteMapping("/{orderId}")
-    public ResponseEntity<OrderRespDto> deleteOrder(@PathVariable UUID orderId, @RequestHeader(name="X-User-Name") String userName) {
+    public ResponseEntity<OrderRespDto> deleteOrder(@PathVariable(name="orderId") UUID orderId, @RequestHeader(name="X-User-Name") String userName) {
         return ResponseEntity.ok(orderService.deleteOrder(orderId, userName));
     }
 
     @Operation(summary="주문 상세 조회", description="특정 주문을 상세 조회합니다.")
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderRespDto> getOrderDetails(@PathVariable UUID orderId) {
+    public ResponseEntity<OrderRespDto> getOrderDetails(@PathVariable(name="orderId") UUID orderId) {
         return ResponseEntity.ok(orderService.getOrderDetails(orderId));
     }
 
-    @Operation(summary="주문 전체 조회(업체 별)", description="해당 업체의 주문들을 전체 조회합니다.")
+    @Operation(summary="주문 전체 조회(업체)", description="해당 업체의 주문들을 전체 조회합니다.")
     @GetMapping("/{companyId}")
-    public ResponseEntity<List<OrderRespDto>> getOrdersOfCompany(@PathVariable UUID companyId) {
+    public ResponseEntity<List<OrderRespDto>> getOrdersOfCompany(@PathVariable(name="companyId") UUID companyId) {
         return ResponseEntity.ok(orderService.getOrdersOfCompany(companyId));
     }
-
-
-
 
 }

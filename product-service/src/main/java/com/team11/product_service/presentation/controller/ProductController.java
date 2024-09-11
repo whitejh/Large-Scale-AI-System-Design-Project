@@ -31,37 +31,37 @@ public class ProductController {
 
     @Operation(summary="상품 수정", description="상품의 정보를 수정합니다.")
     @PutMapping("/{productId}")
-    public ResponseEntity<ProductRespDto> updateProduct(@Validated @RequestBody ProductReqDto requestDto, @PathVariable UUID productId){
+    public ResponseEntity<ProductRespDto> updateProduct(@Validated @RequestBody ProductReqDto requestDto, @PathVariable(name="productId") UUID productId){
         return ResponseEntity.ok(productService.updateProduct(requestDto, productId));
     }
 
     @Operation(summary="상품 삭제", description="특정 상품을 삭제합니다.")
     @DeleteMapping("/{productId}")
-    public ResponseEntity<ProductRespDto> deleteProduct(@PathVariable UUID productId, @RequestHeader(name="X-User-Name", required = false) String userName){
+    public ResponseEntity<ProductRespDto> deleteProduct(@PathVariable(name="productId") UUID productId, @RequestHeader(name="X-User-Name", required = false) String userName){
         return ResponseEntity.ok(productService.deleteProduct(productId, userName));
     }
 
     @Operation(summary="상품 전제 조회", description="특정 업체의 전체 상품을 조회합니다.")
     @GetMapping("/search/{companyId}")
-    public ResponseEntity<List<ProductRespDto>> getProducts(@PathVariable UUID companyId){
+    public ResponseEntity<List<ProductRespDto>> getProducts(@PathVariable(name="companyId") UUID companyId){
         return ResponseEntity.ok(productService.getAllProducts(companyId));
     }
 
     @Operation(summary="상품 상세 조회", description="특정 상품을 조회합니다.")
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductRespDto> searchProduct(@PathVariable UUID productId){
+    public ResponseEntity<ProductRespDto> searchProduct(@PathVariable(name="productId") UUID productId){
         return ResponseEntity.ok(productService.searchProduct(productId));
     }
 
     @Operation(summary="상품 재고 확인", description="특정 상품의 재고를 반환합니다.")
     @GetMapping("/stock/{productId}")
-    public int getStockByProductId(@PathVariable UUID productId){
+    public int getStockByProductId(@PathVariable(name="productId") UUID productId){
         return productService.getStock(productId);
     }
 
     @Operation(summary="상품 재고 갱신", description="특정 상품의 재고를 갱신합니다.")
     @PutMapping("/stock/{productId}")
-    public void updateStockByProductId(@PathVariable UUID productId, int stock){
+    public void updateStockByProductId(@PathVariable(name="productId") UUID productId, @RequestParam(name="stock") int stock){
         productService.updateStock(productId, stock);
     }
 }

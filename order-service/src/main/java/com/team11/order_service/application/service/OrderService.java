@@ -28,8 +28,8 @@ public class OrderService {
     private DeliveryFeignClient deliveryFeignClient;
 
     // 주문 생성
-    public OrderRespDto createOrder(OrderReqDto reqDto, String userName) {
-        Order order = OrderReqDto.toOrder(reqDto, userName);
+    public OrderRespDto createOrder(OrderReqDto reqDto) {
+        Order order = OrderReqDto.toOrder(reqDto);
 
         int quantity = order.getQuantity();
         int stock = productFeignClient.getStockByProductId(order.getProductId());
@@ -64,13 +64,12 @@ public class OrderService {
     }
 
     // 주문 수정
-    public OrderRespDto updateOrder(UUID orderId, OrderReqDto reqDto) {
+    public OrderRespDto updateOrder(UUID orderId, int newQuantity) {
         Order order = orderRepository.findByOrderIdAndDeletedIsFalse(orderId).orElseThrow(
                 ()-> new IllegalArgumentException("수정하려는 주문을 찾을 수 없습니다.")
         );
 
         int originStock = order.getQuantity() + productFeignClient.getStockByProductId(order.getProductId());
-        int newQuantity = reqDto.getQuantity();
 
         // 재고 확인
         if(originStock >= newQuantity) {

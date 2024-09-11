@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -38,7 +39,7 @@ public class BaseEntity {
     private String deletedBy;
 
     @Column(name="is_deleted")
-    private boolean deleted = false;
+    private Boolean deleted=false;
 
     public void setDeleted(LocalDateTime deletedAt, String deletedBy){
         this.deletedAt = deletedAt;

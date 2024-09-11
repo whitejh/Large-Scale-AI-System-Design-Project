@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -24,6 +23,8 @@ public class CompanyService {
 
     public CompanyRespDto createCompany(CompanyReqDto reqDto) {
         //허브 아이디 확인
+
+
         Company company = CompanyReqDto.toCompany(reqDto);
 
         return CompanyRespDto.from(companyRepository.save(company));
@@ -81,17 +82,22 @@ public class CompanyService {
 
     // 업체의 소속 허브 아이디 반환
     public UUID getHubIdByCompanyId(UUID companyId) {
-        UUID hubId = companyRepository.findHubIdByCompanyIdAndDeletedIsFalse(companyId).orElseThrow(
+        Company company= companyRepository.findByCompanyIdAndDeletedIsFalse(companyId).orElseThrow(
                 ()-> new IllegalArgumentException("해당 업체의 소속 허브를 찾을 수 없습니다.")
         );
+
+        UUID hubId = company.getHubId();
         return hubId;
     }
 
     // 업체의 주소 반환
     public String getCompanyAddy (UUID companyId) {
-        String companyAddy = companyRepository.findCompanyAddressByCompanyIdAndDeletedIsFalse(companyId).orElseThrow(
+        Company company = companyRepository.findByCompanyIdAndDeletedIsFalse(companyId).orElseThrow(
                 ()-> new IllegalArgumentException("해당 업체의 주소를 찾을 수 없습니다.")
         );
+
+        String companyAddy = company.getCompanyAddress();
+
         return companyAddy;
     }
 }
