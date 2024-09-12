@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class OrderController {
 
     @Operation(summary="주문 생성", description="새 주문을 생성합니다.")
     @PostMapping
-    public ResponseEntity<OrderRespDto> createOrder(OrderReqDto orderReqDto) {
+    public ResponseEntity<OrderRespDto> createOrder(@Validated @RequestBody OrderReqDto orderReqDto) {
         return ResponseEntity.ok(orderService.createOrder(orderReqDto));
     }
 
@@ -47,7 +48,7 @@ public class OrderController {
     }
 
     @Operation(summary="주문 전체 조회(업체)", description="해당 업체의 주문들을 전체 조회합니다.")
-    @GetMapping("/{companyId}")
+    @GetMapping("/search/{companyId}")
     public ResponseEntity<List<OrderRespDto>> getOrdersOfCompany(@PathVariable(name="companyId") UUID companyId) {
         return ResponseEntity.ok(orderService.getOrdersOfCompany(companyId));
     }

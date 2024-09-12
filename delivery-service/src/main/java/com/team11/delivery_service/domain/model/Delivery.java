@@ -1,5 +1,6 @@
 package com.team11.delivery_service.domain.model;
 
+import com.team11.delivery_service.presentation.request.RecipientReqDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -44,5 +45,10 @@ public class Delivery extends BaseEntity {
         this.status = status;
         this.recipientName = recipientName;
         this.recipientSlackId = recipientSlackId;
+    }
+
+    public void updateRecipient(RecipientReqDto reqDto){
+        this.recipientName = reqDto.getRecipientName();
+        this.recipientSlackId = reqDto.getRecipientSlackId();
     }
 }

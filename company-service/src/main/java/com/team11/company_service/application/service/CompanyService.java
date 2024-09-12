@@ -7,6 +7,7 @@ import com.team11.company_service.presentation.request.CompanyReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,9 +19,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CompanyService {
 
-    // 업체 추가
     private final CompanyRepository companyRepository;
 
+    // 업체 추가
+    @Transactional
     public CompanyRespDto createCompany(CompanyReqDto reqDto) {
         //허브 아이디 확인
 
@@ -31,6 +33,7 @@ public class CompanyService {
     }
 
     // 업체 수정
+    @Transactional
     public CompanyRespDto updateCompany(CompanyReqDto reqDto, UUID companyId) {
         // 권한 확인
 
@@ -47,6 +50,7 @@ public class CompanyService {
     }
 
     // 업체 삭제
+    @Transactional
     public CompanyRespDto deleteCompany(UUID companyId, String userName) {
         Company company = companyRepository.findByCompanyIdAndDeletedIsFalse(companyId).orElseThrow(
                 ()-> new IllegalArgumentException("삭제하려는 업체가 없거나 이미 삭제되었습니다.")
@@ -74,6 +78,8 @@ public class CompanyService {
 
         return CompanyRespDto.from(company);
     }
+
+    // FeignClient
 
     // 업체 존재 여부 확인
     public boolean checkCompany (UUID companyId){

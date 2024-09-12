@@ -1,13 +1,15 @@
 package com.team11.delivery_service.presentation.controller;
 
+import com.team11.delivery_service.application.dto.DeliveryRespDto;
 import com.team11.delivery_service.application.service.DeliveryService;
+import com.team11.delivery_service.presentation.request.RecipientReqDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -27,8 +29,12 @@ public class DeliveryController {
         return deliveryService.createDelivery(supplyCompanyId, receiveCompanyId, recipientName, recipientSlackId);
     }
 
-
     // 배송 수정
+    @Operation(summary="배송 수정", description="배송 정보를 수정합니다.")
+    @PutMapping("/{deliveryId}")
+    public ResponseEntity<DeliveryRespDto> updateDelivery(@Validated @RequestBody RecipientReqDto reqDto, @PathVariable(name="deliveryId") UUID deliveryId) {
+        return ResponseEntity.ok(deliveryService.updateDelivery(reqDto, deliveryId));
+    }
 
     // 배송 삭제
 
