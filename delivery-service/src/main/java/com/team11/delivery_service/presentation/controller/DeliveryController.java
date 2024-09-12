@@ -3,7 +3,6 @@ package com.team11.delivery_service.presentation.controller;
 import com.team11.delivery_service.application.dto.DeliveryRespDto;
 import com.team11.delivery_service.application.service.DeliveryService;
 import com.team11.delivery_service.presentation.request.RecipientReqDto;
-import feign.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
