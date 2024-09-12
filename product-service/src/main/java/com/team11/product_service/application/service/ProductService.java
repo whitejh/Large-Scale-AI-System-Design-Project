@@ -8,6 +8,7 @@ import com.team11.product_service.presentation.request.ProductReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,6 +25,7 @@ public class ProductService {
     private final CompanyFeignClient companyFeignClient;
 
     // 상품 추가
+    @Transactional
     public ProductRespDto createProduct(ProductReqDto req) {
         Product product = ProductReqDto.toProduct(req);
 
@@ -38,6 +40,7 @@ public class ProductService {
     }
 
     // 상품 수정
+    @Transactional
     public ProductRespDto updateProduct(ProductReqDto req, UUID productId) {
         UUID companyId = req.getCompanyId();
 
@@ -54,6 +57,7 @@ public class ProductService {
     }
 
     // 상품 삭제
+    @Transactional
     public ProductRespDto deleteProduct(UUID productId, String userName) {
         Product product = productRepository.findByProductIdAndDeletedIsFalse(productId).orElseThrow(
                 ()-> new IllegalArgumentException("삭제하려는 상품이 존재하지 않습니다.")
@@ -81,7 +85,9 @@ public class ProductService {
         return ProductRespDto.from(product);
     }
 
-    // 상품 재고 확인 (feignClient)
+    // FeignClient
+
+    // 상품 재고 확인
     public int getStock(UUID productId) {
         Product product = productRepository.findByProductIdAndDeletedIsFalse(productId).orElseThrow(
                 ()-> new IllegalArgumentException("상품이 존재하지 않아 재고를 확인할 수 없습니다.")
@@ -92,7 +98,7 @@ public class ProductService {
         return stock;
     }
 
-    // 상품 재고 업데이트 (feignClient)
+    // 상품 재고 업데이트
     public void updateStock(UUID productId, int stock) {
         Product product = productRepository.findByProductIdAndDeletedIsFalse(productId).orElseThrow(
                 ()-> new IllegalArgumentException("해당 상품을 찾을 수 없습니다.")

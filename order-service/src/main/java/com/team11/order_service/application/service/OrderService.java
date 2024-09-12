@@ -10,6 +10,7 @@ import com.team11.order_service.presentation.request.OrderReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,6 +29,7 @@ public class OrderService {
     private DeliveryFeignClient deliveryFeignClient;
 
     // 주문 생성
+    @Transactional
     public OrderRespDto createOrder(OrderReqDto reqDto) {
         Order order = OrderReqDto.toOrder(reqDto);
 
@@ -64,6 +66,7 @@ public class OrderService {
     }
 
     // 주문 수정
+    @Transactional
     public OrderRespDto updateOrder(UUID orderId, int newQuantity) {
         Order order = orderRepository.findByOrderIdAndDeletedIsFalse(orderId).orElseThrow(
                 ()-> new IllegalArgumentException("수정하려는 주문을 찾을 수 없습니다.")
@@ -80,12 +83,15 @@ public class OrderService {
             throw new IllegalArgumentException("재고가 부족합니다.");
         }
 
+        order.setQuantity(newQuantity);
+
         orderRepository.save(order);
 
         return OrderRespDto.from(order);
     }
 
     // 주문 삭제
+    @Transactional
     public OrderRespDto deleteOrder(UUID orderId, String userName) {
         Order order = orderRepository.findByOrderIdAndDeletedIsFalse(orderId).orElseThrow(
                 ()-> new IllegalArgumentException("삭제하려는 주문이 존재하지 않습니다.")

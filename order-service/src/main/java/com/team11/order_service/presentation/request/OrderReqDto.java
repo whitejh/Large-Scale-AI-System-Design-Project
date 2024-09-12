@@ -20,7 +20,9 @@ public class OrderReqDto {
     private UUID supplyCompany;
     private UUID receiveCompany;
 
+    @NotBlank
     private String recipientName;
+    @NotBlank
     private UUID recipientSlackId;
 
     public static Order toOrder(OrderReqDto reqDtoDto) {
