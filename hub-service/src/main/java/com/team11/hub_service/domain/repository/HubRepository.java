@@ -10,6 +10,9 @@ import java.util.UUID;
 @Repository
 public interface HubRepository extends JpaRepository<Hub, UUID> {
 
-    Optional<Hub> findByHubIdAndDeletedFalse(UUID hubId);
-    Optional<Hub> findByNameContainingAndDeletedFalse(String hubName); // 검색
+    Optional<Hub> findByHubId(UUID hubId);
+    Optional<Hub> findByHubIdAndDeleteFalse(UUID hubId);
+    Optional<Hub> findByNameContainingAndDeleteFalse(String hubName); // 검색
+
+
 }

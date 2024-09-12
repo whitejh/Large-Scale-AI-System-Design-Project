@@ -41,6 +41,7 @@ public abstract class BaseTimeEntity {
     @Column(length = 100)
     private String deletedBy;
 
+
     public void setDeleted(Timestamp deletedAt, String deletedBy){
         this.deletedAt = deletedAt;
         this.deletedBy = deletedBy;

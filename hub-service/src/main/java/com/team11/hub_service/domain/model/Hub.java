@@ -36,8 +36,8 @@ public class Hub extends BaseTimeEntity {
     @Column(nullable = false)
     private double longitude;
 
-    @Column(name="is_Deleted")
-    private boolean deleted = false;
+    @Column(name="is_deleted")
+    private boolean delete = false;
 
 
 //    public static Hub createHub(HubRequestDto requestDto) {
