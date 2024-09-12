@@ -19,6 +19,9 @@ public class Delivery extends BaseEntity {
     @Column(name="delivery_id")
     private UUID deliveryId;
 
+    @Column(name="user_id")
+    private String userId;
+
     @Column(name="status")
     @Enumerated(value=EnumType.STRING)
     private DeliveryStatusEnum status;

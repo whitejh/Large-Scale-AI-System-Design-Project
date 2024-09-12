@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -32,6 +34,8 @@ public class DeliveryService {
 
         // 수령 업체 ID로 배송지 주소 받아오기
         String companyAddy = companyFeignClient.getCompanyAddy(receiveCompanyId);
+
+        // 배송 담당자 배정
 
         // 배송 생성
         Delivery delivery = new Delivery(originHubId, destinationHubId, companyAddy, DeliveryStatusEnum.PENDING, recipientName, recipientSlackId);
@@ -66,5 +70,23 @@ public class DeliveryService {
         return DeliveryRespDto.from(deliveryRepository.save(delivery));
     }
 
-    // 배송 조회
+    // 배송 조회 (허브 별)
+    public List<DeliveryRespDto> getDeliveryByHub(UUID hubId){
+        List<Delivery> deliveryList = deliveryRepository.findAllByHubIdAndDeletedIsFalse(hubId).orElseThrow(
+                ()-> new IllegalArgumentException("해당 허브에 배송 내역이 존재하지 않습니다.")
+        );
+
+        return deliveryList.stream().map(DeliveryRespDto::from).collect(Collectors.toList());
+    }
+
+    // 배송 조회 (업체 별)
+    public List<DeliveryRespDto> getDeliveryByCompany(UUID companyId){
+        String companyAddy = companyFeignClient.getCompanyAddy(companyId);
+
+        List<Delivery> deliveryList = deliveryRepository.findAllByDeliveryAddressAndDeletedIsFalse(companyAddy).orElseThrow(
+                ()-> new IllegalArgumentException("해당 업체의 배송 내역이 존재하지 않습니다.")
+        );
+
+        return deliveryList.stream().map(DeliveryRespDto::from).collect(Collectors.toList());
+    }
 }
