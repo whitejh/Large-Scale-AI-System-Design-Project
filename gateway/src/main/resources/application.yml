@@ -12,9 +12,12 @@ spring:
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
       globalcors:
+        add-to-simple-url-handler-mapping: true
         cors-configurations:
           '[/**]':
             allow-credentials: true
+            allowedOrigins:
+              - "*"
             allowedHeaders:
               - x-requested-with
               - Authorization
@@ -39,10 +42,10 @@ spring:
               - DELETE
               - OPTIONS
       routes:
-        - id: service
-          uri: lb://service
+        - id: user-service
+          uri: lb://user-service
           predicates:
-            - Path=/api/**
+            - Path=/api/users/**
       discovery:
         locator:
           enabled: true
@@ -52,11 +55,15 @@ springdoc:
     path: /swagger-ui.html
     config-url: /v3/api-docs/swagger-config
     urls:
-      - url: /api/service/v3/api-docs
-        name: Service API
+      - url: /api/user-service/v3/api-docs
+        name: User Service API
   api-docs:
     enabled: true
 
 service:
   jwt:
-    secret-key: #JWT 키
+    secret-key: "WnN3Q2FjQzRrNFl0V1d1TWp0RE5Xemw2RkE0WVYzS2VsR2xpUVF6M0x6dFNXbnc="
+
+logging:
+  level:
+    org.springframework.security: DEBUG
