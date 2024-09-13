@@ -26,7 +26,7 @@ public class CustomPreAuthFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         log.debug("Request URI: {}", uri);  // 로그 추가
 
-        if ("/api/users/login".equals(uri)) {
+        if ("/api/users/login".equals(uri) || "/api/users/signup".equals(uri)) {
             log.debug("Skipping authentication for /api/users/login");
             filterChain.doFilter(request, response);
             return;

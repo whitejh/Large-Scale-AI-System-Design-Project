@@ -48,8 +48,16 @@ public class SecurityConfig {
     public WebFilter jwtAuthenticationFilter(RedisService redisService) {
 
         return (exchange, chain) -> {
-            // /api/users/login 경로는 필터를 적용하지 않음
-            if (exchange.getRequest().getURI().getPath().equals("/api/users/login")) {
+            String path = exchange.getRequest().getURI().getPath();
+            log.debug("Request Path: {}", path);
+
+            // 로그 추가: Authorization 헤더 확인
+            String authorizationHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+            log.debug("Authorization header: {}", authorizationHeader);
+
+            // /api/users/login과 /api/users/signup 경로는 필터를 적용하지 않음
+            if ("/api/users/login".equals(path) || "/api/users/signup".equals(path)) {
+                log.debug("Skipping filter for path: {}", path);
                 return chain.filter(exchange);
             }
 
@@ -89,7 +97,7 @@ public class SecurityConfig {
                         log.info("User data retrieved: {}", userDto);
                     }
 
-                    var finalUserDto  = Optional.ofNullable(
+                    var finalUserDto = Optional.ofNullable(
                             redisService.getValueAsClass("user:" + username, UserDto.class)
                     ).orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
 

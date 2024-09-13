@@ -75,19 +75,6 @@ public class UserController {
         return "Admin data";
     }
 
-
-//    // refreshtoken
-//    @PostMapping("/reissue")
-//    public ResponseEntity<?> login(HttpServletRequest request, HttpServletResponse response) {
-//        return reissueService.reissue(request, response);
-//    }
-
-//    // 사용자 정보 수정
-//    @PutMapping()
-//    public ResponseEntity<?> updateUser(@Valid @RequestBody UpdateUserRequestDto requestDto) {
-//        userService.updateUser(requestDto);
-//    }
-
     private record UserDto(String username, Collection<String> roles) {
         public static UserDto fromUser(CustomUserDetails userDetails) {
             return new UserDto(
