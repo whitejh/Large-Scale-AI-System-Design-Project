@@ -7,6 +7,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +34,18 @@ public class OrderController {
 
     @Operation(summary="주문 수정 - 재고 변경", description="주문을 수정합니다.")
     @PutMapping("/{orderId}")
-    public ResponseEntity<OrderRespDto> updateOrder(@PathVariable(name="orderId") UUID orderId, @RequestParam(name="newQuantity") int newQuantity) {
+    public ResponseEntity<OrderRespDto> updateOrder(
+                                                    @PathVariable(name="orderId") UUID orderId,
+                                                    @RequestParam(name="newQuantity") int newQuantity)
+    {
         return ResponseEntity.ok(orderService.updateOrder(orderId, newQuantity));
     }
 
     @Operation(summary="주문 삭제", description="주문을 삭제합니다.")
     @DeleteMapping("/{orderId}")
-    public ResponseEntity<OrderRespDto> deleteOrder(@PathVariable(name="orderId") UUID orderId, @RequestHeader(name="X-User-Name") String userName) {
+    public ResponseEntity<OrderRespDto> deleteOrder(
+                                                    @PathVariable(name="orderId") UUID orderId,
+                                                    @RequestHeader(name="X-User-Name") String userName) {
         return ResponseEntity.ok(orderService.deleteOrder(orderId, userName));
     }
 
@@ -49,8 +57,17 @@ public class OrderController {
 
     @Operation(summary="주문 전체 조회(업체)", description="해당 업체의 주문들을 전체 조회합니다.")
     @GetMapping("/search/{companyId}")
-    public ResponseEntity<List<OrderRespDto>> getOrdersOfCompany(@PathVariable(name="companyId") UUID companyId) {
-        return ResponseEntity.ok(orderService.getOrdersOfCompany(companyId));
+    public ResponseEntity<List<OrderRespDto>> getOrdersOfCompany(
+                                                                @PathVariable(name="companyId") UUID companyId,
+                                                                @PageableDefault(size=10) Pageable pageable,
+                                                                @RequestParam(name="size", required = false) Integer size)
+    {
+        // 서치 페이징 기준 확인
+        if (size != null && List.of(10, 30, 50).contains(size)) {
+            pageable = PageRequest.of(pageable.getPageNumber(), size, pageable.getSort());
+        }
+
+        return ResponseEntity.ok(orderService.getOrdersOfCompany(companyId, pageable));
     }
 
 }

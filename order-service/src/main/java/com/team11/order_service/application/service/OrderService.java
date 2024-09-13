@@ -9,6 +9,8 @@ import com.team11.order_service.presentation.request.OrderReqDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -118,8 +120,8 @@ public class OrderService {
     }
 
     // 주문 전체 조회(업체 별)
-    public List<OrderRespDto> getOrdersOfCompany(UUID companyId) {
-        List<Order> orderList = orderRepository.findAllBySupplyCompanyIdOrReceiveCompanyIdAndDeletedIsFalse(companyId).orElseThrow(
+    public List<OrderRespDto> getOrdersOfCompany(UUID companyId, Pageable pageable) {
+        Page<Order> orderList = orderRepository.findAllBySupplyCompanyIdOrReceiveCompanyIdAndDeletedIsFalseOrderByCreatedAtDesc(companyId, pageable).orElseThrow(
                 ()-> new IllegalArgumentException("해당 업체의 주문이 존재하지 않습니다.")
         );
 

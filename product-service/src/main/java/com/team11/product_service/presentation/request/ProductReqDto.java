@@ -16,7 +16,6 @@ public class ProductReqDto {
     private String productName;
     private UUID companyId;
     private UUID hubId;
-    @NotBlank
     private int stock;
 
     public static Product toProduct(ProductReqDto reqDto) {

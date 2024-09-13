@@ -7,6 +7,8 @@ import com.team11.company_service.infrastructure.feign.HubFeignClient;
 import com.team11.company_service.presentation.request.CompanyReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,8 +72,8 @@ public class CompanyService {
     }
 
     // 허브 소속 업체 조회
-    public List<CompanyRespDto> getCompanies(UUID hubId) {
-        List<Company> companyList = companyRepository.findAllByHubIdAndDeletedIsFalse(hubId).orElseThrow(
+    public List<CompanyRespDto> getCompanies(UUID hubId, Pageable pageable) {
+        Page<Company> companyList = companyRepository.findAllByHubIdAndDeletedIsFalseOrderByCreatedAtDesc(hubId, pageable).orElseThrow(
                 ()-> new IllegalArgumentException("해당 허브에 업체가 존재하지 않습니다.")
         );
 

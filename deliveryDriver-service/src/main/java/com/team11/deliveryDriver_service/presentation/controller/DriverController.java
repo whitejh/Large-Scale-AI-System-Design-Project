@@ -7,6 +7,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -49,8 +52,16 @@ public class DriverController {
 
     @Operation(summary="배송 담당자 조회(허브)", description="특정 허브에 소속된 배송 담당자들의 정보를 조회합니다.")
     @GetMapping("/searchAll/{hubId}")
-    public ResponseEntity<List<DriverRespDto>> getDrivers(@PathVariable UUID hubId) {
-        return ResponseEntity.ok(driverService.getAllDrivers(hubId));
+    public ResponseEntity<List<DriverRespDto>> getDrivers(@PathVariable UUID hubId,
+                                                          @PageableDefault(size=10) Pageable pageable,
+                                                          @RequestParam(name="size", required = false) Integer size
+    ) {
+        // 서치 페이징 기준 확인
+        if (size != null && List.of(10, 30, 50).contains(size)) {
+            pageable = PageRequest.of(pageable.getPageNumber(), size, pageable.getSort());
+        }
+
+        return ResponseEntity.ok(driverService.getAllDrivers(hubId, pageable));
     }
 
 

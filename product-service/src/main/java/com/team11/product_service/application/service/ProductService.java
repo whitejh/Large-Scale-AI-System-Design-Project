@@ -4,11 +4,14 @@ import com.team11.product_service.application.dto.ProductRespDto;
 import com.team11.product_service.domain.model.Product;
 import com.team11.product_service.domain.repository.ProductRepository;
 import com.team11.product_service.infrastructure.feign.CompanyFeignClient;
+import com.team11.product_service.infrastructure.feign.HubFeignClient;
 import com.team11.product_service.presentation.request.ProductReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +26,7 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     private final CompanyFeignClient companyFeignClient;
+    private final HubFeignClient hubFeignClient;
 
     // 상품 추가
     @Transactional
@@ -35,6 +39,9 @@ public class ProductService {
         }
 
         // 허브 존재 확인 판별
+        if(!hubFeignClient.isHubIdExist(req.getHubId())){
+            throw new IllegalArgumentException("상품을 등록하려는 업체의 소속 허브가 존재하지 않습니다.");
+        }
 
         return ProductRespDto.from(productRepository.save(product));
     }
@@ -68,8 +75,8 @@ public class ProductService {
     }
 
     // 상품 전체 조회
-    public List<ProductRespDto> getAllProducts(UUID companyId) {
-        List<Product> productList = productRepository.findAllByCompanyIdAndDeletedIsFalse(companyId).orElseThrow(
+    public List<ProductRespDto> getAllProducts(UUID companyId, Pageable pageable) {
+        Page<Product> productList = productRepository.findByCompanyIdAndDeletedIsFalseOrderByCreatedAtDesc(companyId, pageable).orElseThrow(
                 ()-> new IllegalArgumentException("해당 업체의 상품이 존재하지 않습니다.")
         );
 
@@ -99,6 +106,7 @@ public class ProductService {
     }
 
     // 상품 재고 업데이트
+    @Transactional
     public void updateStock(UUID productId, int stock) {
         Product product = productRepository.findByProductIdAndDeletedIsFalse(productId).orElseThrow(
                 ()-> new IllegalArgumentException("해당 상품을 찾을 수 없습니다.")

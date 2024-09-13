@@ -7,6 +7,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,20 +34,33 @@ public class CompanyController {
 
     @Operation(summary="업체 수정", description="업체를 수정합니다.")
     @PutMapping("/{companyId}")
-    public ResponseEntity<CompanyRespDto> updateCompany(@Validated @RequestBody CompanyReqDto companyReqDto, @PathVariable(name="companyId") UUID companyId) {
+    public ResponseEntity<CompanyRespDto> updateCompany(
+                                                        @Validated @RequestBody CompanyReqDto companyReqDto,
+                                                        @PathVariable(name="companyId") UUID companyId) {
         return ResponseEntity.ok(companyService.updateCompany(companyReqDto, companyId));
     }
 
     @Operation(summary="업체 삭제", description="업체를 삭제합니다.")
     @DeleteMapping("/{companyId}")
-    public ResponseEntity<CompanyRespDto> deleteCompany(@PathVariable(name="companyId") UUID companyId, @RequestHeader(name="X-User-Name") String userName) {
+    public ResponseEntity<CompanyRespDto> deleteCompany(
+                                                        @PathVariable(name="companyId") UUID companyId,
+                                                        @RequestHeader(name="X-User-Name") String userName) {
         return ResponseEntity.ok(companyService.deleteCompany(companyId, userName));
     }
 
     @Operation(summary="허브 소속 업체 조회", description="해당 허브에 속한 업체들을 전체 조회합니다.")
     @GetMapping("/search/{hubId}")
-    public ResponseEntity<List<CompanyRespDto>> getCompanies(@PathVariable(name="hubId") UUID hubId) {
-        return ResponseEntity.ok(companyService.getCompanies(hubId));
+    public ResponseEntity<List<CompanyRespDto>> getCompanies(
+                                                            @PathVariable(name="hubId") UUID hubId,
+                                                            @PageableDefault(size=10) Pageable pageable,
+                                                            @RequestParam(name="size",required = false) Integer size
+                                                             ) {
+        // 서치 페이징 기준 확인
+        if (size != null && List.of(10, 30, 50).contains(size)) {
+            pageable = PageRequest.of(pageable.getPageNumber(), size, pageable.getSort());
+        }
+
+        return ResponseEntity.ok(companyService.getCompanies(hubId, pageable));
     }
 
     @Operation(summary="업체 상세 조회", description="특정 업체를 상세 조회합니다.")
