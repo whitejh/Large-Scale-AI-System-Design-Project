@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 
+import java.util.UUID;
+
 @Getter
 public class SignUpRequestDto {
 
@@ -24,7 +26,7 @@ public class SignUpRequestDto {
     @NotBlank(message = "이메일을 입력해 주세요")
     private String email;
 
-    private String slackId;
+    private UUID slackId;
 
     @NotBlank(message = "권한을 입력해 주세요")
     private String role;

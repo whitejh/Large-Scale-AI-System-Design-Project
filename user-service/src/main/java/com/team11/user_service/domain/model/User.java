@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -32,7 +33,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    private String slackId;
+    private UUID slackId;
 
     private UserRole role;
 

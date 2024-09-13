@@ -1,6 +1,7 @@
 package com.team11.user_service.appication.service;
 
 import com.team11.user_service.appication.dto.MessageResponseDto;
+import com.team11.user_service.appication.dto.ResponseUserInfo;
 import com.team11.user_service.domain.model.User;
 import com.team11.user_service.domain.repository.UserRepository;
 import com.team11.user_service.presentation.request.SignUpRequestDto;
@@ -12,7 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -111,5 +115,29 @@ public class UserService {
         userRepository.save(user);
 
         return new MessageResponseDto("회원 탈퇴처리가 되었습니다.");
+    }
+
+    // SlackId 추출
+    public UUID getSlackId(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 회원입니다.")
+        );
+        return user.getSlackId();
+    }
+
+    // 사용자 정보 조회
+    public ResponseUserInfo getUserInfo(Long userId) {
+        User user = userRepository.findByIdAndIsDeletedFalse(userId).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 회원입니다.")
+        );
+        return ResponseUserInfo.fromEntity(user);
+    }
+
+    // 사용자 정보 전체 조회
+    public List<ResponseUserInfo> getAllUserInfo() {
+        List<User> userList = userRepository.findAllByIsDeletedFalse();
+        return userList.stream()
+                .map(ResponseUserInfo::fromEntity)
+                .collect(Collectors.toList());
     }
 }

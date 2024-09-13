@@ -1,6 +1,7 @@
 package com.team11.user_service.presentation.controller;
 
 import com.team11.user_service.appication.dto.MessageResponseDto;
+import com.team11.user_service.appication.dto.ResponseUserInfo;
 import com.team11.user_service.appication.jwt.JWTUtil;
 import com.team11.user_service.appication.service.RedisService;
 import com.team11.user_service.appication.service.UserService;
@@ -19,10 +20,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -96,6 +98,27 @@ public class UserController {
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('DRIVER') or hasRole('COMPANY') ")
     public ResponseEntity<MessageResponseDto> deleteUser(@PathVariable Long userId) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.deleteUser(userId));
+    }
+
+    // 슬랙Id 확인
+    @GetMapping("/divers/{userId}")
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
+    public UUID getSlackId(@PathVariable Long userId) {
+        return userService.getSlackId(userId);
+    }
+
+    // 사용자 정보 조회
+    @GetMapping("/{userId}")
+    @PreAuthorize("hasRole('MASTER')")
+    public ResponseEntity<ResponseUserInfo> getUserInfo(@PathVariable Long userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserInfo(userId));
+    }
+
+    // 사용자 정보 전체 조회
+    @GetMapping
+    @PreAuthorize("hasRole('MASTER')")
+    public ResponseEntity<List<ResponseUserInfo>> getAllUserInfo() {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUserInfo());
     }
 
     private record UserDto(String username, Collection<String> roles) {
