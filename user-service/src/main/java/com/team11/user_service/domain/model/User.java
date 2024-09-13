@@ -90,4 +90,10 @@ public class User {
     public void updatePassword(String encode) {
         this.password = encode;
     }
+
+    // 회원 탈퇴
+    public void deleteUser() {
+        this.isDeleted = true;
+        this.deletedAt = LocalDateTime.now();
+    }
 }

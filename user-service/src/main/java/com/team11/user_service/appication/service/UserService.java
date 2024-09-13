@@ -7,7 +7,6 @@ import com.team11.user_service.presentation.request.SignUpRequestDto;
 import com.team11.user_service.presentation.request.UpdateUserRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -59,7 +58,7 @@ public class UserService {
 
         System.out.println("user.getNickname() = " + user.getNickname());
         System.out.println("requestDto.getNickname() = " + requestDto.getNickname());
-        
+
         // 닉네임 중복 확인
         if (requestDto.getNickname() != null && !requestDto.getNickname().equals(user.getNickname())) {
             Optional<User> byNickname = userRepository.findByNickname(requestDto.getNickname());
@@ -99,4 +98,18 @@ public class UserService {
         return new MessageResponseDto("회원 정보가 수정되었습니다.");
     }
 
+    // 회원 탈퇴
+    public MessageResponseDto deleteUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다"));
+        if (user.isDeleted()) {
+            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+        }
+
+        user.deletedBy(user);
+        user.deleteUser();
+
+        userRepository.save(user);
+
+        return new MessageResponseDto("회원 탈퇴처리가 되었습니다.");
+    }
 }

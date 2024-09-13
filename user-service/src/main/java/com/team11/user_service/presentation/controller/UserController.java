@@ -1,5 +1,6 @@
 package com.team11.user_service.presentation.controller;
 
+import com.team11.user_service.appication.dto.MessageResponseDto;
 import com.team11.user_service.appication.jwt.JWTUtil;
 import com.team11.user_service.appication.service.RedisService;
 import com.team11.user_service.appication.service.UserService;
@@ -86,8 +87,15 @@ public class UserController {
     // 회원 정보 수정
     @PutMapping()
     @PreAuthorize("hasRole('MANANGER') or hasRole('DRIVER') or hasRole('COMPANY')")
-    public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequestDto requestDto) {
+    public ResponseEntity<MessageResponseDto> updateUser(@RequestBody UpdateUserRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(requestDto));
+    }
+
+    // 회원 탈퇴
+    @DeleteMapping("/{userId}")
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('DRIVER') or hasRole('COMPANY') ")
+    public ResponseEntity<MessageResponseDto> deleteUser(@PathVariable Long userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.deleteUser(userId));
     }
 
     private record UserDto(String username, Collection<String> roles) {
