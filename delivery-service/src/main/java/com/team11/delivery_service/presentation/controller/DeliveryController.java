@@ -26,7 +26,7 @@ public class DeliveryController {
 
     private final DeliveryService deliveryService;
 
-    // 배송 생성
+    // 주문 생성 시 자동으로 생성
     @Operation(summary="배송 생성", description="새 배송을 생성합니다.")
     @PostMapping
     public UUID createDelivery(UUID supplyCompanyId,
@@ -37,7 +37,7 @@ public class DeliveryController {
         return deliveryService.createDelivery(supplyCompanyId, receiveCompanyId, recipientName, recipientSlackId);
     }
 
-    // 배송 수정
+    // 권한 -> MASTER, MANAGER(본인 허브 소속만), DRIVER(본인 배송 담당만)
     @Operation(summary="배송 수정", description="배송 정보를 수정합니다.")
     @PutMapping("/{deliveryId}")
     public ResponseEntity<DeliveryRespDto> updateDelivery(@Validated @RequestBody RecipientReqDto reqDto,
@@ -53,7 +53,7 @@ public class DeliveryController {
         return ResponseEntity.ok(deliveryService.deleteDelivery(deliveryId, userName));
     }
 
-    // 배송 조회 (허브 별)
+    // 권한 -> MASTER, MANAGER
     @Operation(summary = "배송 조회(허브 별)", description = "허브 별 배송 내역을 조회합니다.")
     @GetMapping("/searchByHub/{hubId}")
     public ResponseEntity<List<DeliveryRespDto>> getDeliveryByHub(@PathVariable(name="hubId") UUID hubId,
@@ -68,7 +68,7 @@ public class DeliveryController {
         return ResponseEntity.ok(deliveryService.getDeliveryByHub(hubId, pageable));
     }
 
-    // 배송 조회 (업체 별)
+    // 권한 -> MASTER, COMPANY
     @Operation(summary="배송 조회(업체 별)", description = "업체 별 배송 내역을 조회합니다.")
     @GetMapping("/searchByCompany/{companyId}")
     public ResponseEntity<List<DeliveryRespDto>> getDeliveryByCompany(@PathVariable(name="companyId") UUID companyId,
@@ -83,5 +83,6 @@ public class DeliveryController {
         return ResponseEntity.ok(deliveryService.getDeliveryByCompany(companyId, pageable));
     }
 
+    // 권한 -> MASTER, DRIVER(본인 배송 담당만)
     // 배송 조회 (배송 담당자 별)
 }

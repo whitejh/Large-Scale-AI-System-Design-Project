@@ -27,12 +27,14 @@ public class ProductController {
 
     private final ProductService productService;
 
+    // 권한 -> MASTER, MANAGER(본인 허브 소속만), COMPANY(본인 업체 소속만)
     @Operation(summary="상품 추가", description="업체에 상품을 추가합니다.")
     @PostMapping
     public ResponseEntity<ProductRespDto> createProduct(@Validated @RequestBody ProductReqDto requestDto){
         return ResponseEntity.ok(productService.createProduct(requestDto));
     }
 
+    // 권한 -> MASTER, MANAGER(본인 허브 소속만), COMPANY(본인 업체 소속만)
     @Operation(summary="상품 수정", description="상품의 정보를 수정합니다.")
     @PutMapping("/{productId}")
     public ResponseEntity<ProductRespDto> updateProduct(
@@ -41,6 +43,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.updateProduct(requestDto, productId));
     }
 
+    // 권한 -> MASTER, MANAGER(본인 허브 소속만), COMPANY(본인 업체 소속만)
     @Operation(summary="상품 삭제", description="특정 상품을 삭제합니다.")
     @DeleteMapping("/{productId}")
     public ResponseEntity<ProductRespDto> deleteProduct(
@@ -49,6 +52,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.deleteProduct(productId, userName));
     }
 
+    // 권한 -> MASTER, MANAGER, COMPANY, DRIVER
     @Operation(summary="상품 전제 조회", description="특정 업체의 전체 상품을 조회합니다.")
     @GetMapping("/search/{companyId}")
     public ResponseEntity<List<ProductRespDto>> getProducts(
@@ -64,6 +68,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProducts(companyId, pageable));
     }
 
+    // 권한 -> MASTER, MANAGER, COMPANY, DRIVER
     @Operation(summary="상품 상세 조회", description="특정 상품을 조회합니다.")
     @GetMapping("/{productId}")
     public ResponseEntity<ProductRespDto> searchProduct(@PathVariable(name="productId") UUID productId){

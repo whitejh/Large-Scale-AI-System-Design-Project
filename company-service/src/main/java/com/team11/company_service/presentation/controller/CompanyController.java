@@ -26,12 +26,14 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
+    // 권한 -> MASTER, MANAGER(본인 허브 소속만)
     @Operation(summary="업체 생성", description="새 업체를 생성합니다.")
     @PostMapping
     public ResponseEntity<CompanyRespDto> createCompany(@Validated @RequestBody CompanyReqDto companyReqDto) {
         return ResponseEntity.ok(companyService.createCompany(companyReqDto));
     }
 
+    // 권한 -> MASTER, MANAGER(본인 허브 소속만), COMPANY(본인 업체 소속만)
     @Operation(summary="업체 수정", description="업체를 수정합니다.")
     @PutMapping("/{companyId}")
     public ResponseEntity<CompanyRespDto> updateCompany(
@@ -40,6 +42,7 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.updateCompany(companyReqDto, companyId));
     }
 
+    // 권한 -> MASTER, MANAGER(본인 허브 소속만)
     @Operation(summary="업체 삭제", description="업체를 삭제합니다.")
     @DeleteMapping("/{companyId}")
     public ResponseEntity<CompanyRespDto> deleteCompany(
@@ -48,6 +51,7 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.deleteCompany(companyId, userName));
     }
 
+    // 권한 -> MASTER, MANAGER, COMPANY, DRIVER
     @Operation(summary="허브 소속 업체 조회", description="해당 허브에 속한 업체들을 전체 조회합니다.")
     @GetMapping("/search/{hubId}")
     public ResponseEntity<List<CompanyRespDto>> getCompanies(
@@ -63,6 +67,7 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.getCompanies(hubId, pageable));
     }
 
+    // 권한 -> MASTER, MANAGER, COMPANY, DRIVER
     @Operation(summary="업체 상세 조회", description="특정 업체를 상세 조회합니다.")
     @GetMapping("/{companyId}")
     public ResponseEntity<CompanyRespDto> getCompanyDetails(@PathVariable(name="companyId") UUID companyId) {

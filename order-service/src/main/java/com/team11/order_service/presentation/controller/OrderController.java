@@ -26,12 +26,14 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    // 권한 -> MASTER, MANAGER, COMPANY, DRIVER
     @Operation(summary="주문 생성", description="새 주문을 생성합니다.")
     @PostMapping
     public ResponseEntity<OrderRespDto> createOrder(@Validated @RequestBody OrderReqDto orderReqDto) {
         return ResponseEntity.ok(orderService.createOrder(orderReqDto));
     }
 
+    // 권한 -> MASTER, MANAGER, COMPANY, DRIVER - (해당 주문자만 가능)
     @Operation(summary="주문 수정 - 재고 변경", description="주문을 수정합니다.")
     @PutMapping("/{orderId}")
     public ResponseEntity<OrderRespDto> updateOrder(
@@ -49,12 +51,14 @@ public class OrderController {
         return ResponseEntity.ok(orderService.deleteOrder(orderId, userName));
     }
 
+    // 권한 -> MASTER, MANAGER, COMPANY, DRIVER - (본인 주문만)
     @Operation(summary="주문 상세 조회", description="특정 주문을 상세 조회합니다.")
     @GetMapping("/{orderId}")
     public ResponseEntity<OrderRespDto> getOrderDetails(@PathVariable(name="orderId") UUID orderId) {
         return ResponseEntity.ok(orderService.getOrderDetails(orderId));
     }
 
+    // 권한 -> MASTER, COMPANY(본인 업체 소속만)
     @Operation(summary="주문 전체 조회(업체)", description="해당 업체의 주문들을 전체 조회합니다.")
     @GetMapping("/search/{companyId}")
     public ResponseEntity<List<OrderRespDto>> getOrdersOfCompany(
