@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Table(name = "p_users")
 public class User {
 
@@ -35,6 +35,10 @@ public class User {
     private String slackId;
 
     private UserRole role;
+
+    @Builder.Default
+    @Column(name = "is_deleted")
+    private boolean isDeleted = false;
 
     // 생성, 수정, 삭제 시간
     @Column(name = "created_at", updatable = false)
@@ -75,4 +79,15 @@ public class User {
         this.deletedBy = currentUser;
     }
 
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updateEmail(String email) {
+        this.email = email;
+    }
+
+    public void updatePassword(String encode) {
+        this.password = encode;
+    }
 }

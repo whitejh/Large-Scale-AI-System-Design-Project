@@ -1,7 +1,9 @@
 package com.team11.user_service.appication.config;
 
 import com.team11.user_service.appication.jwt.CustomPreAuthFilter;
+import com.team11.user_service.appication.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +21,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    private final CustomPreAuthFilter customPreAuthFilter;
+    @Bean
+    public CustomPreAuthFilter customPreAuthFilter() {
+        return new CustomPreAuthFilter();
+    }
+
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -28,24 +35,17 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // CSRF disable
         http.csrf(AbstractHttpConfigurer::disable)
+                .addFilterBefore(customPreAuthFilter(), UsernamePasswordAuthenticationFilter.class) // 필터 등록
                 .authorizeHttpRequests(exchange -> exchange
-                        .requestMatchers("/api/users/login", "/api/users/signup").permitAll() // 로그인과 회원가입 경로는 인증 없이 접근 가능
+                        .requestMatchers("/api/users/login", "/api/users/signup").permitAll()
                         .anyRequest().authenticated()
-                );
-
-        // 기본 설정인 Session 방식은 사용하지 않고 JWT 방식을 사용하기 위한 설정
-        http.sessionManagement(sessionManagement ->
-                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        );
-
-        // CustomPreAuthFilter를 JWT 필터 뒤에 추가합니다.
-        http.addFilterBefore(customPreAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                )
+                .userDetailsService(customUserDetailsService)
+                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
-
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {

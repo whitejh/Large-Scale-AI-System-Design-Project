@@ -15,6 +15,8 @@ public class UpdateUserRequestDto {
             message = "비밀번호는 최소 8자 이상, 15자 이하이며 알파벳 대소문자(a~z, A~Z), 숫자(0~9), 특수문자로 입력해주세요 ")
     private String password;
 
+    private String checkPassword;
+
     private String email;
 
     private String slackId;

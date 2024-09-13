@@ -1,12 +1,19 @@
 package com.team11.user_service.appication.service;
 
+import com.team11.user_service.appication.dto.MessageResponseDto;
+import com.team11.user_service.domain.model.User;
 import com.team11.user_service.domain.repository.UserRepository;
 import com.team11.user_service.presentation.request.SignUpRequestDto;
+import com.team11.user_service.presentation.request.UpdateUserRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -15,7 +22,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final AuthenticationManager authenticationManager;
 
     public String signUp(SignUpRequestDto requestDto) {
 
@@ -42,42 +48,55 @@ public class UserService {
         return "회원가입에 성공했습니다.";
     }
 
-//    // 로그인
-//    public ResponseEntity<LoginResponseDto> login(LoginRequestDto requestDto,
-//                                                  HttpServletRequest request,
-//                                                  HttpServletResponse response) {
-//
-//        try {
-//            Authentication authentication
-//                    = authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(requestDto.getUsername(), requestDto.getPassword()));
-//
-//            String username = authentication.getName();
-//
-//            User user = userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
-//            String role = user.getRole().name();
-//
-//            // 토큰 생성
-//            String accessToken = jwtUtil.createJwt("access", username, role, 600000L);
-//            String refreshToken = jwtUtil.createJwt("refresh", username, role, 86400000L);
-//
-//            // 리프레시 토큰 저장
-//            RefreshToken redisToken = new RefreshToken(refreshToken, username);
-//            refreshTokenRepository.save(redisToken);
-//
-//            // 응답 설정
-//            LoginResponseDto loginResponseDto = new LoginResponseDto(accessToken, refreshToken);
-//            return ResponseEntity.ok(loginResponseDto);
-//        } catch (AuthenticationException e) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        }
-//    }
+    // 회원 정보 수정
+    public MessageResponseDto updateUser(UpdateUserRequestDto requestDto) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
+//         회원 확인
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("존재하지 않는 회원입니다.")
+        );
 
-//    // 회원 정보 수정
-//    @Transactional
-//    public void updateUser(UpdateUserRequestDto requestDto) {
-//
-//
-//    }
+        System.out.println("user.getNickname() = " + user.getNickname());
+        System.out.println("requestDto.getNickname() = " + requestDto.getNickname());
+        
+        // 닉네임 중복 확인
+        if (requestDto.getNickname() != null && !requestDto.getNickname().equals(user.getNickname())) {
+            Optional<User> byNickname = userRepository.findByNickname(requestDto.getNickname());
+            if (byNickname.isPresent()) {
+                throw new IllegalArgumentException("중복된 닉네임 입니다.");
+            }
+            user.updateNickname(requestDto.getNickname());
+        }
+
+        // 이메일 중복 확인
+        if (requestDto.getEmail() != null && !requestDto.getEmail().equals(user.getEmail())) {
+            Optional<User> byEmail = userRepository.findByEmail(requestDto.getEmail());
+            if (byEmail.isPresent()) {
+                throw new IllegalArgumentException("중복된 이메일 입니다.");
+            }
+            user.updateEmail(requestDto.getEmail());
+        }
+
+        if (requestDto.getPassword() != null && !requestDto.getCheckPassword().isEmpty()) {
+            // 기존 비밀번호 확인
+            if (!bCryptPasswordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
+                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            }
+
+            // 새 비밀번호 확인
+            if (!requestDto.getPassword().equals(requestDto.getCheckPassword())) {
+                throw new IllegalArgumentException("비밀번호 확인란을 다시 입력해 주세요");
+            }
+
+            // 새 비밀번호 인코딩 및 저장
+            user.updatePassword(bCryptPasswordEncoder.encode(requestDto.getPassword()));
+        }
+
+        user.updatedBy(user);
+        userRepository.save(user);
+
+        return new MessageResponseDto("회원 정보가 수정되었습니다.");
+    }
+
 }

@@ -6,6 +6,7 @@ import com.team11.user_service.appication.service.UserService;
 import com.team11.user_service.presentation.request.CustomUserDetails;
 import com.team11.user_service.presentation.request.LoginRequestDto;
 import com.team11.user_service.presentation.request.SignUpRequestDto;
+import com.team11.user_service.presentation.request.UpdateUserRequestDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -50,17 +52,23 @@ public class UserController {
         );
 
         // 인증 성공 시, redis 저장을 위한 처리를 위해 user를 가져옴
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal(); // 수정된 부분
-        Collection<String> roles = userDetails.getAuthorities().stream()
+        Object principal = authentication.getPrincipal();
+        if (!(principal instanceof CustomUserDetails)) {
+            log.error("Expected CustomUserDetails but found: " + principal.getClass().getName());
+            throw new RuntimeException("Authentication returned unexpected principal");
+        }
+        CustomUserDetails customUserDetails = (CustomUserDetails) principal;
+
+        Collection<String> roles = customUserDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
         // userDto는 redis에 저장하기 위한 중간 dto
-        var userDto = UserDto.fromUser(userDetails); // 수정된 부분
+        var userDto = UserDto.fromUser(customUserDetails);
 
         redisService.setValue("user:" + requestDto.getUsername(), userDto);
 
-        return jwtUtil.createJwt(userDetails.getUsername(), roles, 3600000L);
+        return jwtUtil.createJwt(customUserDetails.getUsername(), roles, 3600000L);
     }
 
     // 권한 확인
@@ -73,6 +81,13 @@ public class UserController {
         System.out.println("rolesHeader = " + rolesHeader);
         // 이 메서드는 'ADMIN' 역할을 가진 사용자만 접근할 수 있습니다.
         return "Admin data";
+    }
+
+    // 회원 정보 수정
+    @PutMapping()
+    @PreAuthorize("hasRole('MANANGER') or hasRole('DRIVER') or hasRole('COMPANY')")
+    public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequestDto requestDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(requestDto));
     }
 
     private record UserDto(String username, Collection<String> roles) {
