@@ -3,6 +3,7 @@ package com.team11.delivery_service.application.service;
 import com.team11.delivery_service.application.dto.DeliveryRespDto;
 import com.team11.delivery_service.domain.model.Delivery;
 import com.team11.delivery_service.domain.model.DeliveryStatusEnum;
+import com.team11.delivery_service.domain.repository.DeliveryPathRepository;
 import com.team11.delivery_service.domain.repository.DeliveryRepository;
 import com.team11.delivery_service.infrastructure.feign.CompanyFeignClient;
 import com.team11.delivery_service.presentation.request.RecipientReqDto;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 public class DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
+    private final DeliveryPathRepository deliveryPathRepository;
 
     private CompanyFeignClient companyFeignClient;
 
@@ -39,6 +41,9 @@ public class DeliveryService {
 
         // 배송 생성
         Delivery delivery = new Delivery(originHubId, destinationHubId, companyAddy, DeliveryStatusEnum.PENDING, recipientName, recipientSlackId);
+
+        // 배송 기록
+        // 출발 허브 ID, 도착 허브 ID, 시간, 거리 List 형식으로 받아와서 반복문 돌아 배송 기록 생성
 
         deliveryRepository.save(delivery);
 

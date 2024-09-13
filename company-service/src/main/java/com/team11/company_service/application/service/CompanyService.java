@@ -3,6 +3,7 @@ package com.team11.company_service.application.service;
 import com.team11.company_service.application.dto.CompanyRespDto;
 import com.team11.company_service.domain.model.Company;
 import com.team11.company_service.domain.repository.CompanyRepository;
+import com.team11.company_service.infrastructure.feign.HubFeignClient;
 import com.team11.company_service.presentation.request.CompanyReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,11 +22,18 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
 
+    private HubFeignClient hubFeignClient;
+
+
     // 업체 추가
     @Transactional
     public CompanyRespDto createCompany(CompanyReqDto reqDto) {
         //허브 아이디 확인
+        UUID hubId = reqDto.getHubId();
 
+        if(!hubFeignClient.isHubIdExist(hubId)){
+            throw new IllegalArgumentException("허브가 존재하지 않습니다.");
+        }
 
         Company company = CompanyReqDto.toCompany(reqDto);
 
