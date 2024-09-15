@@ -1,9 +1,8 @@
-package com.team11.user_service.appication.config;
+package com.team11.user_service.appication.configuration;
 
 import com.team11.user_service.appication.jwt.CustomPreAuthFilter;
 import com.team11.user_service.appication.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,4 +1,4 @@
-package com.team11.user_service.appication.config;
+package com.team11.user_service.appication.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
