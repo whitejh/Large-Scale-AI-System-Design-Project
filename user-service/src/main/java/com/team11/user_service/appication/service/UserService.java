@@ -8,6 +8,8 @@ import com.team11.user_service.presentation.request.SignUpRequestDto;
 import com.team11.user_service.presentation.request.UpdateUserRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -117,13 +119,6 @@ public class UserService {
         return new MessageResponseDto("회원 탈퇴처리가 되었습니다.");
     }
 
-    // SlackId 추출
-    public UUID getSlackId(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 회원입니다.")
-        );
-        return user.getSlackId();
-    }
 
     // 사용자 정보 조회
     public ResponseUserInfo getUserInfo(Long userId) {
@@ -134,10 +129,23 @@ public class UserService {
     }
 
     // 사용자 정보 전체 조회
-    public List<ResponseUserInfo> getAllUserInfo() {
-        List<User> userList = userRepository.findAllByIsDeletedFalse();
-        return userList.stream()
-                .map(ResponseUserInfo::fromEntity)
-                .collect(Collectors.toList());
+    public Page<ResponseUserInfo> getAllUserInfo(Pageable pageable) {
+        Page<User> userPage = userRepository.findAllByIsDeletedFalse(pageable);
+        return userPage.map(this::convertToResponseUserInfo);
+    }
+
+    private ResponseUserInfo convertToResponseUserInfo(User user) {
+        return ResponseUserInfo.fromEntity(user);
+    }
+
+    // 슬랙 ID 업데이트
+    public ResponseUserInfo updateSlackId(Long userId, UUID updatedSlackId) {
+        User user = userRepository.findByIdAndIsDeletedFalse(userId).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 회원입니다.")
+        );
+        user.updateSlackId(updatedSlackId);
+
+        userRepository.save(user);
+        return ResponseUserInfo.fromEntity(user);
     }
 }

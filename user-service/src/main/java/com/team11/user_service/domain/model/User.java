@@ -97,4 +97,9 @@ public class User {
         this.isDeleted = true;
         this.deletedAt = LocalDateTime.now();
     }
+
+    // 슬랙 ID 업데이트
+    public void updateSlackId(UUID updatedSlackId) {
+        this.slackId = updatedSlackId;
+    }
 }

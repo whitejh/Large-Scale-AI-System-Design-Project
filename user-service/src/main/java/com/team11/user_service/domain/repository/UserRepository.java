@@ -1,6 +1,8 @@
 package com.team11.user_service.domain.repository;
 
 import com.team11.user_service.domain.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -22,5 +24,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByIdAndIsDeletedFalse(Long userId);
 
-    List<User> findAllByIsDeletedFalse();
+    Page<User> findAllByIsDeletedFalse(Pageable pageable);
 }
