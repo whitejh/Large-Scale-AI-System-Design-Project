@@ -2,22 +2,25 @@ spring:
   config:
     activate:
       on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/team11
+    username: team11
+    password: 1234
+    driver-class-name: org.postgresql.Driver
   data:
     redis:
       host: localhost
       port: 6379
       username: default
       password: systempass
-  cloud:
-    gateway:
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOrigins:
-              - 'http://localhost:19093'
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka/
+
+server:
+  host: localhost
+  gateway:
+    port: 19091
   swagger:
     host: localhost

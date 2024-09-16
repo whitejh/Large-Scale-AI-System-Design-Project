@@ -1,0 +1,4 @@
+server:
+  port: 19092
+
+message: "user-service message"
