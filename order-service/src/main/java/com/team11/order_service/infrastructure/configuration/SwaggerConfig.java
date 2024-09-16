@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @OpenAPIDefinition(
-        info = @Info(title = "최강11 Service API 명세서",
-                description = "최강11 Service API 명세서",
+        info = @Info(title = "최강11 order-service API 명세서",
+                description = "최강11 order-service API 명세서",
                 version = "v1"))
 @Configuration
 public class SwaggerConfig {

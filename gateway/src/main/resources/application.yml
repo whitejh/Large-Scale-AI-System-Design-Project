@@ -42,31 +42,31 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/api/users
+            - Path=/api/users/**
         - id: product-service
           uri: lb://product-service
           predicates:
-            - Path=/api/products
+            - Path=/api/products/**
         - id: company-service
           uri: lb://company-service
           predicates:
-            - Path=/api/companies
+            - Path=/api/companies/**
         - id: order-service
           uri: lb://order-service
           predicates:
-            - Path=/api/orders
+            - Path=/api/orders/**
         - id: delivery-service
           uri: lb://delivery-service
           predicates:
-            - Path=/api/deliveries
+            - Path=/api/deliveries/**
         - id: deliveryDriver-service
           uri: lb://deliveryDriver-service
           predicates:
-            - Path=/api/drivers
+            - Path=/api/drivers/**
         - id: hub-service
           uri: lb://hub-service
           predicates:
-            - Path=/api/hubs
+            - Path=/api/hubs/**
       discovery:
         locator:
           enabled: true
@@ -75,12 +75,5 @@ springdoc:
     enabled: true
     path: /swagger-ui.html
     config-url: /v3/api-docs/swagger-config
-    urls:
-      - url: /api/service/v3/api-docs
-        name: Service API
   api-docs:
     enabled: true
-
-service:
-  jwt:
-    secret-key: #JWT 키
