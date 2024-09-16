@@ -77,3 +77,11 @@ springdoc:
     config-url: /v3/api-docs/swagger-config
   api-docs:
     enabled: true
+
+service:
+  jwt:
+    secret-key: "WnN3Q2FjQzRrNFl0V1d1TWp0RE5Xemw2RkE0WVYzS2VsR2xpUVF6M0x6dFNXbnc="
+
+logging:
+  level:
+    org.springframework.security: DEBUG
