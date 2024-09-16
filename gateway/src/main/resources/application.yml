@@ -39,10 +39,34 @@ spring:
               - DELETE
               - OPTIONS
       routes:
-        - id: service
-          uri: lb://service
+        - id: user-service
+          uri: lb://user-service
           predicates:
-            - Path=/api/**
+            - Path=/api/users
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/products
+        - id: company-service
+          uri: lb://company-service
+          predicates:
+            - Path=/api/companies
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/orders
+        - id: delivery-service
+          uri: lb://delivery-service
+          predicates:
+            - Path=/api/deliveries
+        - id: deliveryDriver-service
+          uri: lb://deliveryDriver-service
+          predicates:
+            - Path=/api/drivers
+        - id: hub-service
+          uri: lb://hub-service
+          predicates:
+            - Path=/api/hubs
       discovery:
         locator:
           enabled: true
