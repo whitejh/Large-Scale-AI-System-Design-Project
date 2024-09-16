@@ -56,7 +56,7 @@ public class SecurityConfig {
             log.debug("Authorization header: {}", authorizationHeader);
 
             // /api/users/login과 /api/users/signup 경로는 필터를 적용하지 않음
-            if ("/api/users/login".equals(path) || "/api/users/signup".equals(path)) {
+            if ("/api/users/login".equals(path) || "/api/users/signup".equals(path)||"/swagger-ui.html".equals(path)||"/api/service/v3/api-docs".equals(path)) {
                 log.debug("Skipping filter for path: {}", path);
                 return chain.filter(exchange);
             }
