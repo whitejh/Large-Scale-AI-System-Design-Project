@@ -1,4 +1,4 @@
-package com.team11.gateway.config;
+package com.team11.gateway.infrastructure.configuration;
 
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
