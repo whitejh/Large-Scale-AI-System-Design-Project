@@ -74,12 +74,12 @@ public class HubService {
 
     // 허브 삭제
     @Transactional
-    public void deleteHub(UUID hubId, String userName) {
+    public void deleteHub(UUID hubId) {
         Hub hub = hubRepository.findByHubIdAndDeleteFalse(hubId)
                         .orElseThrow(() -> new IllegalArgumentException("삭제하려는 허브가 존재하지 않습니다."));
 
         hub.setDelete(true); // 허브 삭제시 delete 필드를 true로 설정
-        hub.setDeleted(new Timestamp(System.currentTimeMillis()), userName);
+        hub.setDeleted(new Timestamp(System.currentTimeMillis()));
         hubRepository.save(hub);
     }
 
