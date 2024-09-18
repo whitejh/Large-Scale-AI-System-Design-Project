@@ -1,6 +1,7 @@
 package com.team11.hub_service.presentation.request;
 
 import com.team11.hub_service.domain.model.Hub;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class HubRequestDto {
 
+    @NotBlank
     private String name;
     private String address;
     private Double latitude;

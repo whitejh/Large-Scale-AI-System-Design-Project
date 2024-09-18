@@ -3,8 +3,12 @@ package com.team11.hub_service.application.service;
 import com.team11.hub_service.application.dto.HubResponseDto;
 import com.team11.hub_service.domain.model.Hub;
 import com.team11.hub_service.domain.repository.HubRepository;
+//import com.team11.hub_service.infrastructure.feign.UserFeignClient;
+import com.team11.hub_service.infrastructure.feign.UserFeignClient;
 import com.team11.hub_service.presentation.request.HubRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,14 +16,21 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class HubService {
 
     private final HubRepository hubRepository;
+
+    private final UserFeignClient userClient;
+
+    public String getUserInfo(String userId) {
+        return userClient.getUser(userId);
+    }
 
     // 허브 생성
     public HubResponseDto createHub(HubRequestDto req) {
@@ -38,11 +49,19 @@ public class HubService {
         return HubResponseDto.from(hubRepository.save(hub));
     }
 
-    // 허브 조회
+    // 허브 상세 조회
     public HubResponseDto readHub(UUID hubId) {
         Hub hub = hubRepository.findByHubIdAndDeleteFalse(hubId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 허브를 조회하지 못했습니다."));
         return HubResponseDto.from(hub);
+    }
+
+    // 허브 전체 조회
+    public List<HubResponseDto> readAllHub(UUID hubId, Pageable pageable) {
+        Page<Hub> hubList = hubRepository.findByHubIdAndDeleteFalseOrderByCreatedAtDesc(hubId, pageable)
+                .orElseThrow(() -> new IllegalArgumentException("허브 목록를 조회하지 못했습니다."));
+
+        return hubList.stream().map(HubResponseDto::from).collect(Collectors.toList());
     }
 
     // 허브 검색
@@ -66,11 +85,11 @@ public class HubService {
 
     // 업체 생성 및 수정될 때
     // 허브 id가 실제로 존재하는 허브인지 확인
-    public boolean getCompany(UUID hudId) {
+    public boolean isHubIdExist(UUID hudId) {
         return hubRepository.findByHubIdAndDeleteFalse(hudId).isPresent(); // true/false
     }
 
-    //////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
     // findHub 메서드 /////
     private Hub findHub(UUID hubId) {
         return hubRepository.findByHubIdAndDeleteFalse(hubId).orElseThrow(() ->
