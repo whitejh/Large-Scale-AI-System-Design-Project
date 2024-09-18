@@ -55,8 +55,4 @@ public class Hub extends BaseTimeEntity {
         this.latitude = requestDto.getLatitude();
         this.longitude = requestDto.getLongitude();
     }
-
-
-
-
 }
