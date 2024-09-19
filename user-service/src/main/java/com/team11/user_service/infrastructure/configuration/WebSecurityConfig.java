@@ -37,7 +37,7 @@ public class WebSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(customPreAuthFilter(), UsernamePasswordAuthenticationFilter.class) // 필터 등록
                 .authorizeHttpRequests(exchange -> exchange
-                        .requestMatchers("/api/users/login", "/api/users/signup").permitAll()
+                        .requestMatchers("/users/login", "/users/signup").permitAll()
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(customUserDetailsService)
