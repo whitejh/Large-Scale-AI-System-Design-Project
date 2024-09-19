@@ -4,55 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6dcadb74-5c83-4092-8b6d-b97647b07725" name="Changes" comment="2차 권한 확인 및 배송 생성 시 배송 담당자 배정 알고리즘 추가">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/dto/OrderToDeliveryDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/application/dto/OrderToDeliveryDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0bf6603c-97a8-4ffb-b733-7d21055fad28.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0bf6603c-97a8-4ffb-b733-7d21055fad28.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0bf6603c-97a8-4ffb-b733-7d21055fad28/storage_v2/_src_/database/team11.PSWvyw/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0bf6603c-97a8-4ffb-b733-7d21055fad28/storage_v2/_src_/database/team11.PSWvyw/schema/public.abK9xQ.meta" afterDir="false" />
+    <list default="true" id="6dcadb74-5c83-4092-8b6d-b97647b07725" name="Changes" comment="각 모듈 별로 feign으로 데이터 주고 받을 시 생기는 오류 해결. 주문 생성 시 배송과 배송 담당자 배정까지 동시에 되도록 구현.">
+      <change afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/dto/PathResultsDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryPathService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/infrastructure/feign/HubPathsFeignClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/application/dto/PathResultsDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/CompanyServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/CompanyServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/application/service/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/application/service/CompanyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/infrastructure/feign/HubFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/infrastructure/feign/HubFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/presentation/controller/CompanyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/presentation/controller/CompanyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/company-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/company-service/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/infrastructure/feign/CompanyFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/infrastructure/feign/CompanyFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/infrastructure/feign/HubPathsFeignClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/presentation/controller/DeliveryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/presentation/controller/DeliveryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/application/service/DriverService.java" beforeDir="false" afterPath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/application/service/DriverService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/domain/repository/DriverRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/domain/repository/DriverRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/presentation/controller/DriverController.java" beforeDir="false" afterPath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/presentation/controller/DriverController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/presentation/request/DriverReqDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/presentation/request/DriverReqDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deliveryDriver-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/deliveryDriver-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/application/service/HubService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/application/service/HubService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/presentation/controller/HubController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/presentation/controller/HubController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hub-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/hub-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/application/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/application/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/domain/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/domain/repository/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/infrastructure/feign/DeliveryFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/infrastructure/feign/DeliveryFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/infrastructure/feign/ProductFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/infrastructure/feign/ProductFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/presentation/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/presentation/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/presentation/request/OrderReqDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/presentation/request/OrderReqDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/build/classes/java/main/com/team11/product_service/application/service/ProductService.class" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/build/classes/java/main/com/team11/product_service/application/service/ProductService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/build/classes/java/main/com/team11/product_service/domain/model/BaseEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/build/classes/java/main/com/team11/product_service/domain/model/BaseEntity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/build/classes/java/main/com/team11/product_service/presentation/controller/ProductController.class" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/build/classes/java/main/com/team11/product_service/presentation/controller/ProductController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/build/resources/main/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/build/resources/main/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/team11/product_service/application/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/team11/product_service/application/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/team11/product_service/presentation/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/team11/product_service/presentation/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/domain/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/domain/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/model/DeliveryPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/model/DeliveryPath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/application/service/HubPathsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/application/service/HubPathsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/domain/repository/HubPathsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/domain/repository/HubPathsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/presentation/controller/HubPathsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/presentation/controller/HubPathsController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,6 +157,7 @@
       <recent name="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/application" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.team11.delivery_service.application.dto" />
       <recent name="com.team11.order_service.application.dto" />
       <recent name="com.team11.delivery_service.infrastructure.feign" />
       <recent name="com.team11.order_service.infrastructure.feign" />
@@ -208,7 +172,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.DeliveryServiceApplication">
+  <component name="RunManager" selected="Spring Boot.HubServiceApplication">
     <configuration name="CompanyServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="company-service.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.team11.company_service.CompanyServiceApplication" />
@@ -290,7 +254,7 @@
       <option name="presentableId" value="Default" />
       <updated>1726473374503</updated>
       <workItem from="1726473375773" duration="50000" />
-      <workItem from="1726722855484" duration="28600000" />
+      <workItem from="1726722855484" duration="36783000" />
     </task>
     <task id="LOCAL-00001" summary="WebSecurityConfig 파일 수정 -&gt; api 요청 에러 해결">
       <option name="closed" value="true" />
@@ -324,7 +288,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726738772245</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="각 모듈 별로 feign으로 데이터 주고 받을 시 생기는 오류 해결. 주문 생성 시 배송과 배송 담당자 배정까지 동시에 되도록 구현.">
+      <option name="closed" value="true" />
+      <created>1726752056831</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1726752056831</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -335,6 +307,7 @@
     <MESSAGE value="각 모듈마다 webSecurityConfig, RedisConfig, JWTUtil, Filter 추가" />
     <MESSAGE value="@PreAuthorize 사용해 권한 확인 추가" />
     <MESSAGE value="2차 권한 확인 및 배송 생성 시 배송 담당자 배정 알고리즘 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="2차 권한 확인 및 배송 생성 시 배송 담당자 배정 알고리즘 추가" />
+    <MESSAGE value="각 모듈 별로 feign으로 데이터 주고 받을 시 생기는 오류 해결. 주문 생성 시 배송과 배송 담당자 배정까지 동시에 되도록 구현." />
+    <option name="LAST_COMMIT_MESSAGE" value="각 모듈 별로 feign으로 데이터 주고 받을 시 생기는 오류 해결. 주문 생성 시 배송과 배송 담당자 배정까지 동시에 되도록 구현." />
   </component>
 </project>

@@ -2,12 +2,14 @@ package com.team11.delivery_service.application.service;
 
 import com.team11.delivery_service.application.dto.DeliveryRespDto;
 import com.team11.delivery_service.application.dto.OrderToDeliveryDto;
+import com.team11.delivery_service.application.dto.PathResultsDto;
 import com.team11.delivery_service.domain.model.Delivery;
 import com.team11.delivery_service.domain.model.DeliveryStatusEnum;
 import com.team11.delivery_service.domain.repository.DeliveryPathRepository;
 import com.team11.delivery_service.domain.repository.DeliveryRepository;
 import com.team11.delivery_service.infrastructure.feign.CompanyFeignClient;
 import com.team11.delivery_service.infrastructure.feign.DriverFeignClient;
+import com.team11.delivery_service.infrastructure.feign.HubPathsFeignClient;
 import com.team11.delivery_service.infrastructure.feign.UserFeignClient;
 import com.team11.delivery_service.presentation.request.RecipientReqDto;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +40,12 @@ public class DeliveryService {
     private CompanyFeignClient companyFeignClient;
     @Autowired
     private DriverFeignClient driverFeignClient;
+    @Autowired
+    private HubPathsFeignClient hubPathsFeignClient;
+
+    @Autowired
+    private DeliveryPathService deliveryPathService;
+    private HubPathsFeignClient hubPathsFeignClient;
 
     // 배송 생성
     @Transactional
@@ -73,8 +81,8 @@ public class DeliveryService {
 
         // 배송 기록
         // 출발 허브 ID, 도착 허브 ID, 시간, 거리 List 형식으로 받아와서 반복문 돌아 배송 기록 생성
-
-
+        List<PathResultsDto> paths = hubPathsFeignClient.getHubPaths(originHubId, destinationHubId);
+        deliveryPathService.createDeliveryPath(paths);
 
         delivery.setCreated(dto.getUserName());
 

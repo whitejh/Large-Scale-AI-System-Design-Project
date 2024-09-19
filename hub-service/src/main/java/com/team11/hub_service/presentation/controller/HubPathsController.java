@@ -3,11 +3,13 @@ package com.team11.hub_service.presentation.controller;
 
 import com.team11.hub_service.application.dto.HubPathsRespDto;
 import com.team11.hub_service.application.dto.HubResponseDto;
+import com.team11.hub_service.application.dto.PathResultsDto;
 import com.team11.hub_service.application.service.HubPathsService;
 import com.team11.hub_service.domain.model.HubPaths;
 import com.team11.hub_service.presentation.request.HubPathsReqDto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.Path;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -60,7 +62,7 @@ public class HubPathsController {
     }
 
     @Operation(summary="허브 이동경로 전체 조회", description="허브 이동경로를 전체 조회합니다.")
-    @GetMapping
+    @GetMapping("/search/{hubPathsId}")
     public ResponseEntity<List<HubPathsRespDto>> readHubPaths(@PathVariable UUID hubPathsId,
                                                         @PageableDefault(size=10) Pageable pageable,
                                                         @RequestParam(name="size", required = false) Integer size){
@@ -79,5 +81,14 @@ public class HubPathsController {
     public ResponseEntity<Void> deleteHubPaths(@PathVariable UUID hubPathsId) {
         hubPathsService.deleteHubPaths(hubPathsId);
         return ResponseEntity.noContent().build();
+    }
+
+    // FeignClient
+
+    @Operation(summary="허브 이동 경로 리스트 반환", description="출발 허브와 도착 허브 사이의 이동 경로를 리스트의 형태로 반환합니다.")
+    @GetMapping("/getHubPaths/{startHubId}/{endHubId}")
+    public List<PathResultsDto> getHubPaths(@PathVariable(name="startHubId") UUID startHubId,
+                                            @PathVariable(name="endHubId") UUID endHubId) {
+        return hubPathsService.getHubPaths(startHubId, endHubId);
     }
 }

@@ -1,5 +1,6 @@
 package com.team11.delivery_service.domain.model;
 
+import com.team11.delivery_service.application.dto.PathResultsDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -43,13 +44,14 @@ public class DeliveryPath extends BaseEntity {
     @Enumerated(value=EnumType.STRING)
     private DeliveryStatusEnum status;
 
-    public DeliveryPath from(Delivery delivery, int sequence) {
+    public DeliveryPath from(PathResultsDto dto, UUID deliveryId, int sequence, DeliveryStatusEnum status) {
         return DeliveryPath.builder()
-                .deliveryId(delivery.getDeliveryId())
+                .deliveryId(deliveryId)
                 .sequenceNumber(sequence)
-                .originHubId(delivery.getOriginHubId())
-                .destinationHubId(delivery.getDestinationHubId())
-                .status(delivery.getStatus())
+                .originHubId(dto.getStartHubId())
+                .destinationHubId(dto.getEndHubId())
+                .actualDuration(dto.getDuration())
+                .status(status)
                 .build();
     }
 }
