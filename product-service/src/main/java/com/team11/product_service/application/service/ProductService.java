@@ -38,9 +38,12 @@ public class ProductService {
     @Transactional
     public ProductRespDto createProduct(ProductReqDto req, String userName, String role) {
         // 권한 확인
+        log.info(role);
         if(role.equals("MANAGER")||role.equals("COMPANY")){
             UUID hubId = req.getHubId();
+            log.info(hubId.toString());
             UUID userHubId = userFeignClient.getUserHubId(userName);
+            log.info(userHubId.toString());
 
             if(!hubId.equals(userHubId)){
                 throw new IllegalArgumentException("해당 상품 추가에 권한이 없습니다.");
