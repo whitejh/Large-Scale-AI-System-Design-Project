@@ -1,0 +1,27 @@
+spring:
+  profiles:
+    default: dev
+  application:
+    name: deliveryDriver-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
+        highlight_sql: true
+server:
+  port: 19097
+  servlet:
+    context-path: /api
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+service:
+  jwt:
+    secret-key: "WnN3Q2FjQzRrNFl0V1d1TWp0RE5Xemw2RkE0WVYzS2VsR2xpUVF6M0x6dFNXbnc="

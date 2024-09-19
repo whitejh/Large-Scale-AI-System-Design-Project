@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6dcadb74-5c83-4092-8b6d-b97647b07725" name="Changes" comment="허브 간 이동 경로 찾는 알고리즘 구현">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/dto/PathResultsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/dto/PathResultsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryPathService.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryPathService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/model/DeliveryPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/model/DeliveryPath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/domain/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/domain/model/User.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/company-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/delivery-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/deliveryDriver-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/eureka-server">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/gateway">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/hub-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/order-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/product-service">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/user-service">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev-test" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;MeGuuuun&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/whitejh/Large-Scale-AI-System-Design-Project.git&quot;,
+    &quot;accountId&quot;: &quot;2bb807b1-1e50-4250-9ab0-1e7947f5aa22&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2m90EjyadSwLsj4mspLQf5JW0TR" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build company-service.executor": "Run",
+    "Gradle.Build delivery-service.executor": "Run",
+    "Gradle.Build deliveryDriver-service.executor": "Run",
+    "Gradle.Build eureka-server.executor": "Run",
+    "Gradle.Build gateway.executor": "Run",
+    "Gradle.Build hub-service.executor": "Run",
+    "Gradle.Build order-service.executor": "Run",
+    "Gradle.Build product-service.executor": "Run",
+    "Gradle.Build user-service.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.CompanyServiceApplication.executor": "Run",
+    "Spring Boot.DeliveryDriverServiceApplication.executor": "Run",
+    "Spring Boot.DeliveryServiceApplication.executor": "Run",
+    "Spring Boot.EurekaServerApplication.executor": "Run",
+    "Spring Boot.GatewayApplication.executor": "Run",
+    "Spring Boot.HubServiceApplication.executor": "Run",
+    "Spring Boot.OrderServiceApplication.executor": "Run",
+    "Spring Boot.ProductServiceApplication.executor": "Run",
+    "Spring Boot.UserServiceApplication.executor": "Run",
+    "git-widget-placeholder": "merge-test",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/jiminpark/Desktop/Large-Scale-AI-System-Design-Project/company-service/src/main/java/com/team11/company_service/application",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.configurations.included.in.services": "true",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/application" />
+      <recent name="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/infrastructure/configuration" />
+      <recent name="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/infrastructure/configuration" />
+      <recent name="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application" />
+      <recent name="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/application" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.team11.delivery_service.application.dto" />
+      <recent name="com.team11.order_service.application.dto" />
+      <recent name="com.team11.delivery_service.infrastructure.feign" />
+      <recent name="com.team11.order_service.infrastructure.feign" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.DeliveryServiceApplication">
+    <configuration name="CompanyServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="company-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team11.company_service.CompanyServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DeliveryDriverServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="deliveryDriver-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team11.deliveryDriver_service.DeliveryDriverServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DeliveryServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="delivery-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team11.delivery_service.DeliveryServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="eureka-server.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team11.eureka_server.EurekaServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="gateway.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team11.gateway.GatewayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HubServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="hub-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team11.hub_service.HubServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrderServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="order-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team11.order_service.OrderServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="product-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team11.product_service.ProductServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="user-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.team11.user_service.UserServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6dcadb74-5c83-4092-8b6d-b97647b07725" name="Changes" comment="" />
+      <created>1726473374503</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1726473374503</updated>
+      <workItem from="1726473375773" duration="50000" />
+      <workItem from="1726722855484" duration="40382000" />
+    </task>
+    <task id="LOCAL-00001" summary="WebSecurityConfig 파일 수정 -&gt; api 요청 에러 해결">
+      <option name="closed" value="true" />
+      <created>1726726203658</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1726726203659</updated>
+    </task>
+    <task id="LOCAL-00002" summary="각 모듈마다 webSecurityConfig, RedisConfig, JWTUtil, Filter 추가">
+      <option name="closed" value="true" />
+      <created>1726727518393</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1726727518393</updated>
+    </task>
+    <task id="LOCAL-00003" summary="@PreAuthorize 사용해 권한 확인 추가">
+      <option name="closed" value="true" />
+      <created>1726728653956</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1726728653956</updated>
+    </task>
+    <task id="LOCAL-00004" summary="2차 권한 확인 및 배송 생성 시 배송 담당자 배정 알고리즘 추가">
+      <option name="closed" value="true" />
+      <created>1726738772245</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1726738772245</updated>
+    </task>
+    <task id="LOCAL-00005" summary="각 모듈 별로 feign으로 데이터 주고 받을 시 생기는 오류 해결. 주문 생성 시 배송과 배송 담당자 배정까지 동시에 되도록 구현.">
+      <option name="closed" value="true" />
+      <created>1726752056831</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1726752056831</updated>
+    </task>
+    <task id="LOCAL-00006" summary="허브 간 이동 경로 찾는 알고리즘 구현">
+      <option name="closed" value="true" />
+      <created>1726763040370</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1726763040370</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="WebSecurityConfig 파일 수정 -&gt; api 요청 에러 해결" />
+    <MESSAGE value="각 모듈마다 webSecurityConfig, RedisConfig, JWTUtil, Filter 추가" />
+    <MESSAGE value="@PreAuthorize 사용해 권한 확인 추가" />
+    <MESSAGE value="2차 권한 확인 및 배송 생성 시 배송 담당자 배정 알고리즘 추가" />
+    <MESSAGE value="각 모듈 별로 feign으로 데이터 주고 받을 시 생기는 오류 해결. 주문 생성 시 배송과 배송 담당자 배정까지 동시에 되도록 구현." />
+    <MESSAGE value="허브 간 이동 경로 찾는 알고리즘 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="허브 간 이동 경로 찾는 알고리즘 구현" />
+  </component>
+</project>

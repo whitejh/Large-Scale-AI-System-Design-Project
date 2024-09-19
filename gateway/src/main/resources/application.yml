@@ -1,0 +1,87 @@
+server:
+  port: 19091
+spring:
+  profiles:
+    default: dev
+  main:
+    web-application-type: reactive
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allow-credentials: true
+            allowedHeaders:
+              - x-requested-with
+              - Authorization
+              - content-type
+              - credential
+              - X-AUTH-TOKEN
+              - X-CSRF-TOKEN
+              - X-User-Name
+            exposedHeaders:
+              - x-requested-with
+              - Authorization
+              - content-type
+              - credential
+              - X-AUTH-TOKEN
+              - X-CSRF-TOKEN
+              - X-User-Name
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/products/**
+        - id: company-service
+          uri: lb://company-service
+          predicates:
+            - Path=/api/companies/**
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/orders/**
+        - id: delivery-service
+          uri: lb://delivery-service
+          predicates:
+            - Path=/api/deliveries/**
+        - id: deliveryDriver-service
+          uri: lb://deliveryDriver-service
+          predicates:
+            - Path=/api/drivers/**
+        - id: hub-service
+          uri: lb://hub-service
+          predicates:
+            - Path=/api/hubs/**, /api/hubPaths/**
+      discovery:
+        locator:
+          enabled: true
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+  api-docs:
+    enabled: true
+
+service:
+  jwt:
+    secret-key: "WnN3Q2FjQzRrNFl0V1d1TWp0RE5Xemw2RkE0WVYzS2VsR2xpUVF6M0x6dFNXbnc="
+
+logging:
+  level:
+    org.springframework.security: DEBUG
