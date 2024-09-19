@@ -44,7 +44,7 @@ public class HubPathsController {
         return ResponseEntity.ok(hubPathsService.updateHubPaths(reqDto, hubPathsId));
     }
 
-    @Operation(summary="허브 검색", description="특정 허브를 검색합니다.")
+    @Operation(summary="허브 이동경로 검색", description="특정 허브를 검색합니다.")
     @GetMapping("/search")
     public ResponseEntity<HubPathsRespDto> searchHubPaths(@RequestParam String path) {
 
