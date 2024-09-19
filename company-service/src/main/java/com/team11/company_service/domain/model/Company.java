@@ -30,4 +30,5 @@ public class Company extends BaseEntity{
 
     @Column(name="company_address")
     private String companyAddress;
+
 }

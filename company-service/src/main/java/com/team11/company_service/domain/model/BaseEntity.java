@@ -3,6 +3,7 @@ package com.team11.company_service.domain.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedBy;
@@ -41,9 +42,17 @@ public class BaseEntity {
     @Column(name="is_deleted")
     private Boolean deleted=false;
 
-    public void setDeleted(LocalDateTime deletedAt, String deletedBy){
+    public void setCreatedBy( String userName) {
+        this.createdBy = userName;
+    }
+
+    public void setUpdatedBy(String userName){
+        this.updatedBy = userName;
+    }
+
+    public void setDeleted(LocalDateTime deletedAt, String userName){
         this.deletedAt = deletedAt;
-        this.deletedBy = deletedBy;
+        this.deletedBy = userName;
         this.deleted = true;
     }
 }

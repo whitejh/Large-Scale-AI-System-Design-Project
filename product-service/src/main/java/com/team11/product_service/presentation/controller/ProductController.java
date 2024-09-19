@@ -32,8 +32,10 @@ public class ProductController {
     @Operation(summary="상품 추가", description="업체에 상품을 추가합니다.")
     @PostMapping
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY')")
-    public ResponseEntity<ProductRespDto> createProduct(@Validated @RequestBody ProductReqDto requestDto){
-        return ResponseEntity.ok(productService.createProduct(requestDto));
+    public ResponseEntity<ProductRespDto> createProduct(@Validated @RequestBody ProductReqDto requestDto,
+                                                        @RequestHeader(name="X-User-Name") String userName,
+                                                        @RequestHeader(name="X-User-Roles") String role){
+        return ResponseEntity.ok(productService.createProduct(requestDto, userName, role));
     }
 
     // 권한 -> MASTER, MANAGER(본인 허브 소속만), COMPANY(본인 업체 소속만)
@@ -42,8 +44,10 @@ public class ProductController {
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY')")
     public ResponseEntity<ProductRespDto> updateProduct(
                                                         @Validated @RequestBody ProductReqDto requestDto,
-                                                        @PathVariable(name="productId") UUID productId){
-        return ResponseEntity.ok(productService.updateProduct(requestDto, productId));
+                                                        @PathVariable(name="productId") UUID productId,
+                                                        @RequestHeader(name="X-User-Name") String userName,
+                                                        @RequestHeader(name="X-User-Roles") String role){
+        return ResponseEntity.ok(productService.updateProduct(requestDto, productId, userName, role));
     }
 
     // 권한 -> MASTER, MANAGER(본인 허브 소속만), COMPANY(본인 업체 소속만)
@@ -52,8 +56,9 @@ public class ProductController {
     @PreAuthorize("hasRole('MASTER')")
     public ResponseEntity<ProductRespDto> deleteProduct(
                                                         @PathVariable(name="productId") UUID productId,
-                                                        @RequestHeader(name="X-User-Name", required = false) String userName){
-        return ResponseEntity.ok(productService.deleteProduct(productId, userName));
+                                                        @RequestHeader(name="X-User-Name", required = false) String userName,
+                                                        @RequestHeader(name="X-User-Roles") String role){
+        return ResponseEntity.ok(productService.deleteProduct(productId, userName, role));
     }
 
     // 권한 -> MASTER, MANAGER, COMPANY, DRIVER

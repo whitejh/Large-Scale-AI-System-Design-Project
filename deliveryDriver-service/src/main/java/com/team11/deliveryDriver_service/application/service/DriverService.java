@@ -104,7 +104,6 @@ public class DriverService {
     // FeignClient
 
     // 슬랙 ID 갱신
-
     @Transactional
     public void updateSlackId(Long userId, UUID slackId){
         Driver driver = driverRepository.findByUserIdAndDeletedIsFalse(userId).orElseThrow(
@@ -113,5 +112,23 @@ public class DriverService {
 
         driver.setSlackId(slackId);
         driverRepository.save(driver);
+    }
+
+    // 허브 배송 담당자 리스트 반환
+    public List<Long> getHubDrivers (){
+        List<Long> driverList = driverRepository.findHubDrivers().orElseThrow(
+                ()-> new IllegalArgumentException("허브 배송 담당자 리스트를 불러오는데 실패했습니다.")
+        );
+
+        return driverList;
+    }
+
+    // 업체 배송 담당자 리스트 반환
+    public List<Long> getCompanyDrivers(UUID hubId) {
+        List<Long> driverList = driverRepository.findCompanyDrivers(hubId).orElseThrow(
+                ()-> new IllegalArgumentException("업체 배송 담당자 리스트를 불러오는데 실패했습니다.")
+        );
+
+        return driverList;
     }
 }

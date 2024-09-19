@@ -3,12 +3,15 @@ package com.team11.order_service.application.service;
 import com.team11.order_service.application.dto.OrderRespDto;
 import com.team11.order_service.domain.model.Order;
 import com.team11.order_service.domain.repository.OrderRepository;
+import com.team11.order_service.infrastructure.feign.CompanyFeignClient;
 import com.team11.order_service.infrastructure.feign.DeliveryFeignClient;
 import com.team11.order_service.infrastructure.feign.ProductFeignClient;
+import com.team11.order_service.infrastructure.feign.UserFeignClient;
 import com.team11.order_service.presentation.request.OrderReqDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,12 +30,14 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
+    private CompanyFeignClient companyFeignClient;
     private ProductFeignClient productFeignClient;
     private DeliveryFeignClient deliveryFeignClient;
+    private UserFeignClient userFeignClient;
 
     // 주문 생성
     @Transactional
-    public OrderRespDto createOrder(OrderReqDto reqDto) {
+    public OrderRespDto createOrder(OrderReqDto reqDto, String userName) {
         Order order = OrderReqDto.toOrder(reqDto);
 
         int quantity = order.getQuantity();
@@ -54,25 +59,36 @@ public class OrderService {
         UUID recipientSlackId = reqDto.getRecipientSlackId();
 
         // 배송 생성
-        UUID deliveryId = deliveryFeignClient.createDelivery(supplyCompanyId, receiveCompanyId, recipientName, recipientSlackId);
+        UUID deliveryId = deliveryFeignClient.createDelivery(supplyCompanyId, receiveCompanyId, recipientName, recipientSlackId, userName);
 
         if(Objects.isNull(deliveryId)){
             throw new IllegalArgumentException("배송 생성에 실패했습니다.");
         }
 
         order.setDeliveryId(deliveryId);
+        order.setCreatedBy(userName);
 
         orderRepository.save(order);
-
         return OrderRespDto.from(order);
     }
 
     // 주문 수정
     @Transactional
-    public OrderRespDto updateOrder(UUID orderId, int newQuantity) {
+    public OrderRespDto updateOrder(UUID orderId, int newQuantity, String userName, String role) {
         Order order = orderRepository.findByOrderIdAndDeletedIsFalse(orderId).orElseThrow(
                 ()-> new IllegalArgumentException("수정하려는 주문을 찾을 수 없습니다.")
         );
+
+        // 권한 확인 (배송담당자일 경우 본인의 배송만 수정할 수 있도록)
+        if(role.equals("DRIVER")){
+            UUID deliveryId = order.getDeliveryId();
+            Long driverId = deliveryFeignClient.getDriverId(deliveryId);
+            Long userId = userFeignClient.getUserId(userName);
+
+           if(!driverId.equals(userId)){
+               throw new IllegalArgumentException("해당 주문 수정에 권한이 없습니다.");
+           }
+        }
 
         int originStock = order.getQuantity() + productFeignClient.getStockByProductId(order.getProductId());
 
@@ -86,6 +102,7 @@ public class OrderService {
         }
 
         order.setQuantity(newQuantity);
+        order.setUpdatedBy(userName);
 
         orderRepository.save(order);
 
@@ -111,19 +128,39 @@ public class OrderService {
     }
 
     // 주문 상세 조회
-    public OrderRespDto getOrderDetails(UUID orderId) {
+    public OrderRespDto getOrderDetails(UUID orderId, String userName, String role) {
         Order order = orderRepository.findByOrderIdAndDeletedIsFalse(orderId).orElseThrow(
                 ()-> new IllegalArgumentException("조회하려는 주문이 존재하지 않습니다.")
         );
+
+        // 권한 확인 (배송담당자일 경우 본인의 배송만 수정할 수 있도록)
+        if(role.equals("DRIVER")){
+            UUID deliveryId = order.getDeliveryId();
+            Long driverId = deliveryFeignClient.getDriverId(deliveryId);
+            Long userId = userFeignClient.getUserId(userName);
+
+            if(!driverId.equals(userId)){
+                throw new IllegalArgumentException("해당 주문 조회에 권한이 없습니다.");
+            }
+        }
 
         return OrderRespDto.from(order);
     }
 
     // 주문 전체 조회(업체 별)
-    public List<OrderRespDto> getOrdersOfCompany(UUID companyId, Pageable pageable) {
+    public List<OrderRespDto> getOrdersOfCompany(UUID companyId, Pageable pageable, String userName, String role) {
         Page<Order> orderList = orderRepository.findAllBySupplyCompanyIdOrReceiveCompanyIdAndDeletedIsFalseOrderByCreatedAtDesc(companyId, pageable).orElseThrow(
                 ()-> new IllegalArgumentException("해당 업체의 주문이 존재하지 않습니다.")
         );
+
+        if(role.equals("COMAPNY")){
+            UUID userHubId = userFeignClient.getUserHubId(userName);
+            UUID hubId = companyFeignClient.getHubIdByCompanyId(companyId);
+
+            if(!userHubId.equals(hubId)){
+                throw new IllegalArgumentException("해당 주문 조회에 권한이 없습니다.");
+            }
+        }
 
         return orderList.stream().map(OrderRespDto::from).collect(Collectors.toList());
     }

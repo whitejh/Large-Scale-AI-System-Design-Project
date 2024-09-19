@@ -83,4 +83,16 @@ public class DriverController {
     public void updateSlackId(@PathVariable(name="userId") Long userId, @PathVariable(name="slackId") UUID slackId) {
         driverService.updateSlackId(userId, slackId);
     }
+
+    @Operation(summary="허브 배송 담당자 리스트 반환", description="허브 배송 담당자 리스트를 반환합니다.")
+    @GetMapping("/getHubDrivers")
+    public List<Long> getHubDrivers() {
+        return driverService.getHubDrivers();
+    }
+
+    @Operation(summary="업체 배송 담당자 리스트 반환", description="업체 배송 담당자 리스트를 반환합니다.")
+    @GetMapping("/getCompanyDrivers/{hubId}")
+    public List<Long> getCompanyDrivers(@PathVariable UUID hubId) {
+        return driverService.getCompanyDrivers(hubId);
+    }
 }

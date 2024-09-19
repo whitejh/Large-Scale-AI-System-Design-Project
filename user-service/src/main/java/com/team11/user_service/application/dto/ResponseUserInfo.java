@@ -15,6 +15,7 @@ public class ResponseUserInfo {
     private String email;
     private UUID slackId;
     private String role;
+    private UUID hubId;
 
     public static ResponseUserInfo fromEntity(User user) {
         return ResponseUserInfo.builder()
@@ -23,6 +24,7 @@ public class ResponseUserInfo {
                 .email(user.getEmail())
                 .slackId(user.getSlackId())
                 .role(user.getRole().name())
+                .hubId(user.getHubId())
                 .build();
     }
 }

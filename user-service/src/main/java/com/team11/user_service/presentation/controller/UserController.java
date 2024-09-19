@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -125,4 +126,18 @@ public class UserController {
             );
         }
     }
+
+    // FeignClient
+    @Operation(summary="사용자 소속 허브 ID 확인", description="2차 권한 확인을 위해 사용자가 소속된 허브 ID를 확인합니다.")
+    @GetMapping("/getUserHubId/{username}")
+    public UUID getUserHubId(@PathVariable(name="username") String userName) {
+        return userService.getUserHubId(userName);
+    }
+
+    @Operation(summary="사용자 id 확인", description="2차 권한 확인을 위해 사용자의 id를 반환합니다.")
+    @GetMapping("/getUserId/{username}")
+    public Long getUserId(@PathVariable(name="username") String userName) {
+        return userService.getUserId(userName);
+    }
+
 }

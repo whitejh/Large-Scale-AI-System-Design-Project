@@ -5,6 +5,7 @@ import com.team11.product_service.domain.model.Product;
 import com.team11.product_service.domain.repository.ProductRepository;
 import com.team11.product_service.infrastructure.feign.CompanyFeignClient;
 import com.team11.product_service.infrastructure.feign.HubFeignClient;
+import com.team11.product_service.infrastructure.feign.UserFeignClient;
 import com.team11.product_service.presentation.request.ProductReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +28,21 @@ public class ProductService {
 
     private final CompanyFeignClient companyFeignClient;
     private final HubFeignClient hubFeignClient;
+    private final UserFeignClient userFeignClient;
 
     // 상품 추가
     @Transactional
-    public ProductRespDto createProduct(ProductReqDto req) {
+    public ProductRespDto createProduct(ProductReqDto req, String userName, String role) {
+        // 권한 확인
+        if(role.equals("MANAGER")||role.equals("COMPANY")){
+            UUID hubId = req.getHubId();
+            UUID userHubId = userFeignClient.getUserHubId(userName);
+
+            if(!hubId.equals(userHubId)){
+                throw new IllegalArgumentException("해당 상품 추가에 권한이 없습니다.");
+            }
+        }
+
         Product product = ProductReqDto.toProduct(req);
 
         // 업체 존재 확인 판별
@@ -43,32 +55,55 @@ public class ProductService {
             throw new IllegalArgumentException("상품을 등록하려는 업체의 소속 허브가 존재하지 않습니다.");
         }
 
+        product.setCreatedBy(userName);
+
         return ProductRespDto.from(productRepository.save(product));
     }
 
     // 상품 수정
     @Transactional
-    public ProductRespDto updateProduct(ProductReqDto req, UUID productId) {
-        UUID companyId = req.getCompanyId();
-
+    public ProductRespDto updateProduct(ProductReqDto req, UUID productId, String userName, String role) {
         Product product = productRepository.findByProductIdAndDeletedIsFalse(productId).orElseThrow(
                 ()-> new IllegalArgumentException("수정하려는 상품이 존재하지 않습니다.")
         );
+
+        // 권한 확인
+        if(role.equals("MANAGER")||role.equals("COMPANY")){
+            UUID hubId = product.getHubId();
+            UUID userHubId = userFeignClient.getUserHubId(userName);
+
+            if(!hubId.equals(userHubId)){
+                throw new IllegalArgumentException("해당 상품 추가에 권한이 없습니다.");
+            }
+        }
 
         product.setProductName(req.getProductName());
         product.setStock(req.getStock());
 
         productRepository.save(product);
 
+        product.setUpdatedBy(userName);
+
         return ProductRespDto.from(productRepository.save(product));
     }
 
     // 상품 삭제
     @Transactional
-    public ProductRespDto deleteProduct(UUID productId, String userName) {
+    public ProductRespDto deleteProduct(UUID productId, String userName, String role) {
         Product product = productRepository.findByProductIdAndDeletedIsFalse(productId).orElseThrow(
                 ()-> new IllegalArgumentException("삭제하려는 상품이 존재하지 않습니다.")
         );
+
+        // 권한 확인
+        if(role.equals("MANAGER")||role.equals("COMPANY")){
+            UUID hubId = product.getHubId();
+            UUID userHubId = userFeignClient.getUserHubId(userName);
+
+            if(!hubId.equals(userHubId)){
+                throw new IllegalArgumentException("해당 상품 추가에 권한이 없습니다.");
+            }
+        }
+
 
         product.setDeleted(LocalDateTime.now(), userName);
         return ProductRespDto.from(productRepository.save(product));

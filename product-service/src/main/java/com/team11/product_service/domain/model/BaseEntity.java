@@ -42,6 +42,14 @@ public class BaseEntity {
     @Column(name="is_deleted")
     private boolean deleted=false;
 
+    public void setCreatedBy( String userName) {
+        this.createdBy = userName;
+    }
+
+    public void setUpdatedBy(String userName){
+        this.updatedBy = userName;
+    }
+
     public void setDeleted(LocalDateTime deletedAt, String deletedBy){
         this.deletedAt = deletedAt;
         this.deletedBy = deletedBy;

@@ -31,8 +31,10 @@ public class CompanyController {
     @Operation(summary="업체 생성", description="새 업체를 생성합니다.")
     @PostMapping
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
-    public ResponseEntity<CompanyRespDto> createCompany(@Validated @RequestBody CompanyReqDto companyReqDto) {
-        return ResponseEntity.ok(companyService.createCompany(companyReqDto));
+    public ResponseEntity<CompanyRespDto> createCompany(@Validated @RequestBody CompanyReqDto companyReqDto,
+                                                        @RequestHeader(name="X-User-Name") String userName,
+                                                        @RequestHeader(name="X-User-Roles") String role) {
+        return ResponseEntity.ok(companyService.createCompany(companyReqDto, userName, role));
     }
 
     // 권한 -> MASTER, MANAGER(본인 허브 소속만), COMPANY(본인 업체 소속만)
@@ -41,8 +43,10 @@ public class CompanyController {
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY')")
     public ResponseEntity<CompanyRespDto> updateCompany(
                                                         @Validated @RequestBody CompanyReqDto companyReqDto,
-                                                        @PathVariable(name="companyId") UUID companyId) {
-        return ResponseEntity.ok(companyService.updateCompany(companyReqDto, companyId));
+                                                        @PathVariable(name="companyId") UUID companyId,
+                                                        @RequestHeader(name="X-User-Name") String userName,
+                                                        @RequestHeader(name="X-User-Roles") String role) {
+        return ResponseEntity.ok(companyService.updateCompany(companyReqDto, companyId, userName, role));
     }
 
     // 권한 -> MASTER, MANAGER(본인 허브 소속만)
@@ -51,8 +55,9 @@ public class CompanyController {
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
     public ResponseEntity<CompanyRespDto> deleteCompany(
                                                         @PathVariable(name="companyId") UUID companyId,
-                                                        @RequestHeader(name="X-User-Name") String userName) {
-        return ResponseEntity.ok(companyService.deleteCompany(companyId, userName));
+                                                        @RequestHeader(name="X-User-Name") String userName,
+                                                        @RequestHeader(name="X-User-Roles") String role) {
+        return ResponseEntity.ok(companyService.deleteCompany(companyId, userName, role));
     }
 
     // 권한 -> MASTER, MANAGER, COMPANY, DRIVER

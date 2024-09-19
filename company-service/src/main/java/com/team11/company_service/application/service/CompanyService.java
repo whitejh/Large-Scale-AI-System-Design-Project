@@ -4,6 +4,7 @@ import com.team11.company_service.application.dto.CompanyRespDto;
 import com.team11.company_service.domain.model.Company;
 import com.team11.company_service.domain.repository.CompanyRepository;
 import com.team11.company_service.infrastructure.feign.HubFeignClient;
+import com.team11.company_service.infrastructure.feign.UserFeignClient;
 import com.team11.company_service.presentation.request.CompanyReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +26,12 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
 
     private HubFeignClient hubFeignClient;
+    private UserFeignClient userFeignClient;
 
 
     // 업체 추가
     @Transactional
-    public CompanyRespDto createCompany(CompanyReqDto reqDto) {
+    public CompanyRespDto createCompany(CompanyReqDto reqDto, String userName, String role) {
         //허브 아이디 확인
         UUID hubId = reqDto.getHubId();
 
@@ -37,18 +39,37 @@ public class CompanyService {
             throw new IllegalArgumentException("허브가 존재하지 않습니다.");
         }
 
+        // 권한이 MANAGER 일 때 본인이 속한 허브의 업체인지 확인
+        if(role.equals("MANAGER")){
+            UUID userHubId = userFeignClient.getUserHubId(userName);
+
+            if(!hubId.equals(userHubId)){
+                throw new IllegalArgumentException("해당 업체 생성에 권한이 없습니다.");
+            }
+        }
+
         Company company = CompanyReqDto.toCompany(reqDto);
+
+        company.setCreatedBy(userName);
 
         return CompanyRespDto.from(companyRepository.save(company));
     }
 
     // 업체 수정
     @Transactional
-    public CompanyRespDto updateCompany(CompanyReqDto reqDto, UUID companyId) {
+    public CompanyRespDto updateCompany(CompanyReqDto reqDto, UUID companyId, String userName, String role) {
+        UUID hubId = reqDto.getHubId();
+
         // 권한 확인
+        if(role.equals("MANAGER") || role.equals("COMPANY")){
+            UUID userHubId = userFeignClient.getUserHubId(userName);
 
-        // 허브 아이디 확인
+            if(!hubId.equals(userHubId)){
+                throw new IllegalArgumentException("해당 업체 수정에 권한이 없습니다.");
+            }
+        }
 
+        // 업체 존재 여부 확인
         Company company = companyRepository.findByCompanyIdAndDeletedIsFalse(companyId).orElseThrow(
                 ()-> new IllegalArgumentException("수정하려는 업체를 찾을 수 없습니다.")
         );
@@ -56,15 +77,28 @@ public class CompanyService {
         company.setCompanyAddress(reqDto.getCompanyAddress());
         company.setCompanyName(reqDto.getCompanyName());
 
+        company.setUpdatedBy(userName);
+
         return CompanyRespDto.from(companyRepository.save(company));
     }
 
     // 업체 삭제
     @Transactional
-    public CompanyRespDto deleteCompany(UUID companyId, String userName) {
+    public CompanyRespDto deleteCompany(UUID companyId, String userName, String role) {
         Company company = companyRepository.findByCompanyIdAndDeletedIsFalse(companyId).orElseThrow(
                 ()-> new IllegalArgumentException("삭제하려는 업체가 없거나 이미 삭제되었습니다.")
         );
+
+        UUID hubId = company.getHubId();
+
+        // 권한이 MANAGER 일 때 본인이 속한 허브의 업체인지 확인
+        if(role.equals("MANAGER")){
+            UUID userHubId = userFeignClient.getUserHubId(userName);
+
+            if(!hubId.equals(userHubId)){
+                throw new IllegalArgumentException("해당 업체 삭제에 권한이 없습니다.");
+            }
+        }
 
         company.setDeleted(LocalDateTime.now(), userName);
 

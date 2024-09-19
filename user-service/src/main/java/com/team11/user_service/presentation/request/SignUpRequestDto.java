@@ -31,6 +31,8 @@ public class SignUpRequestDto {
     @NotBlank(message = "권한을 입력해 주세요")
     private String role;
 
+    private UUID hubId;
+
     // 나중에 password encoder 처리해야함
     public static User toEntity(SignUpRequestDto dto , String encodedPassword) {
         return User.builder()
@@ -40,6 +42,7 @@ public class SignUpRequestDto {
                 .email(dto.email)
                 .slackId(dto.slackId)
                 .role(UserRole.valueOf(dto.role))
+                .hubId(dto.hubId)
                 .build();
     }
 

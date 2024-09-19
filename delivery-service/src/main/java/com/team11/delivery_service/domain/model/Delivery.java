@@ -19,8 +19,11 @@ public class Delivery extends BaseEntity {
     @Column(name="delivery_id")
     private UUID deliveryId;
 
-    @Column(name="user_id")
-    private String userId;
+    @Column(name="hub_driver_id")
+    private Long hubDriverId;
+
+    @Column(name="company_driver_id")
+    private Long companyDriverId;
 
     @Column(name="status")
     @Enumerated(value=EnumType.STRING)
@@ -41,7 +44,9 @@ public class Delivery extends BaseEntity {
     @Column(name="recipient_slack_id")
     private UUID recipientSlackId;
 
-    public Delivery(UUID originHubId, UUID destinationHubId, String deliveryAddress, DeliveryStatusEnum status, String recipientName, UUID recipientSlackId){
+    public Delivery(Long hubDriverId, Long companyDriverId,UUID originHubId, UUID destinationHubId, String deliveryAddress, DeliveryStatusEnum status, String recipientName, UUID recipientSlackId){
+        this.hubDriverId = hubDriverId;
+        this.companyDriverId = companyDriverId;
         this.originHubId = originHubId;
         this.destinationHubId = destinationHubId;
         this.deliveryAddress = deliveryAddress;

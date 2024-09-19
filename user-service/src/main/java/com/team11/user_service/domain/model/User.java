@@ -41,6 +41,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @Column(name="hub_id")
+    private UUID hubId;
+
     @Builder.Default
     @Column(name = "is_deleted")
     private boolean isDeleted = false;
@@ -52,7 +55,13 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "updated_by")
+    private String updatedBy;
+
     private LocalDateTime deletedAt;
+
+    @Column(name = "deleted_by")
+    private String deletedBy;
 
     @PrePersist
     protected void onCreate() {
@@ -64,6 +73,16 @@ public class User {
     protected void onUpdate() {
         if (this.deletedAt == null)
             this.updatedAt = LocalDateTime.now();
+    }
+
+    // updated_by
+    public void updatedBy(String userName) {
+        this.updatedBy = userName;
+    }
+
+    // deleted_by
+    public void deletedBy(String userName) {
+        this.deletedBy = userName;
     }
 
     public void updateNickname(String nickname) {

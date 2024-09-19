@@ -33,9 +33,10 @@ public class DeliveryController {
     public UUID createDelivery(UUID supplyCompanyId,
                                UUID receiveCompanyId,
                                String recipientName,
-                               UUID recipientSlackId)
+                               UUID recipientSlackId,
+                               String userName)
     {
-        return deliveryService.createDelivery(supplyCompanyId, receiveCompanyId, recipientName, recipientSlackId);
+        return deliveryService.createDelivery(supplyCompanyId, receiveCompanyId, recipientName, recipientSlackId, userName);
     }
 
     // 권한 -> MASTER, MANAGER(본인 허브 소속만), DRIVER(본인 배송 담당만)
@@ -43,8 +44,10 @@ public class DeliveryController {
     @PutMapping("/{deliveryId}")
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('DRIVER')")
     public ResponseEntity<DeliveryRespDto> updateDelivery(@Validated @RequestBody RecipientReqDto reqDto,
-                                                          @PathVariable(name="deliveryId") UUID deliveryId) {
-        return ResponseEntity.ok(deliveryService.updateDelivery(reqDto, deliveryId));
+                                                          @PathVariable(name="deliveryId") UUID deliveryId,
+                                                          @RequestHeader(name="X-User-Name") String userName,
+                                                          @RequestHeader(name="X-User-Roles") String role) {
+        return ResponseEntity.ok(deliveryService.updateDelivery(reqDto, deliveryId, userName, role));
     }
 
     // 배송 삭제
@@ -62,14 +65,16 @@ public class DeliveryController {
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
     public ResponseEntity<List<DeliveryRespDto>> getDeliveryByHub(@PathVariable(name="hubId") UUID hubId,
                                                                   @PageableDefault(size=10) Pageable pageable,
-                                                                  @RequestParam(name="size", required = false) Integer size)
+                                                                  @RequestParam(name="size", required = false) Integer size,
+                                                                  @RequestHeader(name="X-User-Name") String userName,
+                                                                  @RequestHeader(name="X-User-Roles") String role)
     {
         // 서치 페이징 기준 확인
         if (size != null && List.of(10, 30, 50).contains(size)) {
             pageable = PageRequest.of(pageable.getPageNumber(), size, pageable.getSort());
         }
 
-        return ResponseEntity.ok(deliveryService.getDeliveryByHub(hubId, pageable));
+        return ResponseEntity.ok(deliveryService.getDeliveryByHub(hubId, pageable, userName, role));
     }
 
     // 권한 -> MASTER, COMPANY
@@ -78,7 +83,9 @@ public class DeliveryController {
     @PreAuthorize("hasRole('MASTER') or hasRole('COMPANY')")
     public ResponseEntity<List<DeliveryRespDto>> getDeliveryByCompany(@PathVariable(name="companyId") UUID companyId,
                                                                       @PageableDefault(size=10) Pageable pageable,
-                                                                      @RequestParam(name="size", required = false) Integer size
+                                                                      @RequestParam(name="size", required = false) Integer size,
+                                                                      @RequestHeader(name="X-User-Name") String userName,
+                                                                      @RequestHeader(name="X-User-Roles") String role
     ) {
         // 서치 페이징 기준 확인
         if (size != null && List.of(10, 30, 50).contains(size)) {
@@ -90,4 +97,12 @@ public class DeliveryController {
 
     // 권한 -> MASTER, DRIVER(본인 배송 담당만)
     // 배송 조회 (배송 담당자 별)
+
+
+    // FeignClient
+    @Operation(summary="배송 ID를 통해 배송 담당자 ID 반환", description = "배송 조회 시 권한 확인을 위해 해당 배송의 배송 담당자 ID를 반환합니다.")
+    @GetMapping("/getDriverId/{deliveryId}")
+    public Long getDriverId(@PathVariable(name="deliveryId") UUID deliveryId) {
+        return deliveryService.getDriverId(deliveryId);
+    }
 }

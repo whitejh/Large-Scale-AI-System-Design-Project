@@ -146,5 +146,29 @@ public class UserService {
 
     private ResponseUserInfo convertToResponseUserInfo(User user) {
         return ResponseUserInfo.fromEntity(user);
+
+    }
+
+    // 사용자 허브 ID 확인
+    public UUID getUserHubId(String userName) {
+        User user = userRepository.findByUsernameAndIsDeletedFalse(userName).orElseThrow(
+                ()-> new IllegalArgumentException("해당 사용자의 정보를 찾을 수 없습니다.")
+        );
+
+        UUID hubId = user.getHubId();
+
+        return hubId;
+    }
+
+    // 사용자 id 확인
+
+    public Long getUserId (String userName){
+        User user = userRepository.findByUsername(userName).orElseThrow(
+                ()-> new IllegalArgumentException("해당 사용자의 정보를 찾을 수 없습니다.")
+        );
+
+        Long userId = user.getId();
+
+        return userId;
     }
 }

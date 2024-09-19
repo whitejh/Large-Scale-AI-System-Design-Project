@@ -4,12 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6dcadb74-5c83-4092-8b6d-b97647b07725" name="Changes" comment="각 모듈마다 webSecurityConfig, RedisConfig, JWTUtil, Filter 추가">
+    <list default="true" id="6dcadb74-5c83-4092-8b6d-b97647b07725" name="Changes" comment="@PreAuthorize 사용해 권한 확인 추가">
+      <change afterPath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/infrastructure/feign/UserFeignClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/infrastructure/feign/DriverFeignClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/infrastructure/feign/UserFeignClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/infrastructure/feign/CompanyFeignClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/infrastructure/feign/UserFeignClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/product-service/src/main/java/com/team11/product_service/infrastructure/feign/UserFeignClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/application/service/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/application/service/CompanyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/domain/model/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/domain/model/BaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/domain/model/Company.java" beforeDir="false" afterPath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/domain/model/Company.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/presentation/controller/CompanyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/company-service/src/main/java/com/team11/company_service/presentation/controller/CompanyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/model/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/model/BaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/model/Delivery.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/model/Delivery.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/presentation/controller/DeliveryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/presentation/controller/DeliveryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/application/service/DriverService.java" beforeDir="false" afterPath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/application/service/DriverService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/domain/repository/DriverRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/domain/repository/DriverRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/presentation/controller/DriverController.java" beforeDir="false" afterPath="$PROJECT_DIR$/deliveryDriver-service/src/main/java/com/team11/deliveryDriver_service/presentation/controller/DriverController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/application/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/application/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/domain/model/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/domain/model/BaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/infrastructure/feign/DeliveryFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/infrastructure/feign/DeliveryFeignClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/presentation/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/presentation/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/team11/product_service/application/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/team11/product_service/application/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/team11/product_service/domain/model/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/team11/product_service/domain/model/BaseEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/team11/product_service/presentation/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/team11/product_service/presentation/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/application/dto/ResponseUserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/application/dto/ResponseUserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/application/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/application/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/domain/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/domain/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/domain/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/domain/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/presentation/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/presentation/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/presentation/request/SignUpRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/presentation/request/SignUpRequestDto.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +82,13 @@
         </projects_view>
       </state>
     </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -131,6 +164,10 @@
       <recent name="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/infrastructure/configuration" />
       <recent name="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application" />
       <recent name="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/application" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.team11.delivery_service.infrastructure.feign" />
+      <recent name="com.team11.order_service.infrastructure.feign" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -224,7 +261,7 @@
       <option name="presentableId" value="Default" />
       <updated>1726473374503</updated>
       <workItem from="1726473375773" duration="50000" />
-      <workItem from="1726722855484" duration="5649000" />
+      <workItem from="1726722855484" duration="14527000" />
     </task>
     <task id="LOCAL-00001" summary="WebSecurityConfig 파일 수정 -&gt; api 요청 에러 해결">
       <option name="closed" value="true" />
@@ -242,7 +279,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726727518393</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="@PreAuthorize 사용해 권한 확인 추가">
+      <option name="closed" value="true" />
+      <created>1726728653956</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1726728653956</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,6 +296,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="WebSecurityConfig 파일 수정 -&gt; api 요청 에러 해결" />
     <MESSAGE value="각 모듈마다 webSecurityConfig, RedisConfig, JWTUtil, Filter 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="각 모듈마다 webSecurityConfig, RedisConfig, JWTUtil, Filter 추가" />
+    <MESSAGE value="@PreAuthorize 사용해 권한 확인 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="@PreAuthorize 사용해 권한 확인 추가" />
   </component>
 </project>

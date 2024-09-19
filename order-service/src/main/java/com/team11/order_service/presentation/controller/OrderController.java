@@ -31,8 +31,9 @@ public class OrderController {
     @Operation(summary="주문 생성", description="새 주문을 생성합니다.")
     @PostMapping
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY') or hasRole('DRIVER')")
-    public ResponseEntity<OrderRespDto> createOrder(@Validated @RequestBody OrderReqDto orderReqDto) {
-        return ResponseEntity.ok(orderService.createOrder(orderReqDto));
+    public ResponseEntity<OrderRespDto> createOrder(@Validated @RequestBody OrderReqDto orderReqDto,
+                                                    @RequestHeader(name="X-User-Name") String userName) {
+        return ResponseEntity.ok(orderService.createOrder(orderReqDto, userName));
     }
 
     // 권한 -> MASTER, MANAGER, COMPANY, DRIVER - (해당 주문자만 가능)
@@ -41,9 +42,11 @@ public class OrderController {
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY') or hasRole('DRIVER')")
     public ResponseEntity<OrderRespDto> updateOrder(
                                                     @PathVariable(name="orderId") UUID orderId,
-                                                    @RequestParam(name="newQuantity") int newQuantity)
+                                                    @RequestParam(name="newQuantity") int newQuantity,
+                                                    @RequestHeader(name="X-User-Name") String userName,
+                                                    @RequestHeader(name="X-User-Roles") String role)
     {
-        return ResponseEntity.ok(orderService.updateOrder(orderId, newQuantity));
+        return ResponseEntity.ok(orderService.updateOrder(orderId, newQuantity, userName, role));
     }
 
     @Operation(summary="주문 삭제", description="주문을 삭제합니다.")
@@ -59,8 +62,10 @@ public class OrderController {
     @Operation(summary="주문 상세 조회", description="특정 주문을 상세 조회합니다.")
     @GetMapping("/{orderId}")
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY') or hasRole('DRIVER')")
-    public ResponseEntity<OrderRespDto> getOrderDetails(@PathVariable(name="orderId") UUID orderId) {
-        return ResponseEntity.ok(orderService.getOrderDetails(orderId));
+    public ResponseEntity<OrderRespDto> getOrderDetails(@PathVariable(name="orderId") UUID orderId,
+                                                        @RequestHeader(name="X-User-Name") String userName,
+                                                        @RequestHeader(name="X-Usre-Roles") String role){
+        return ResponseEntity.ok(orderService.getOrderDetails(orderId, userName, role));
     }
 
     // 권한 -> MASTER, COMPANY(본인 업체 소속만)
@@ -69,6 +74,8 @@ public class OrderController {
     @PreAuthorize("hasRole('MASTER') or hasRole('COMPANY')")
     public ResponseEntity<List<OrderRespDto>> getOrdersOfCompany(
                                                                 @PathVariable(name="companyId") UUID companyId,
+                                                                @RequestHeader(name="X-User-Name") String userName,
+                                                                @RequestHeader(name="X-Usre-Roles") String role,
                                                                 @PageableDefault(size=10) Pageable pageable,
                                                                 @RequestParam(name="size", required = false) Integer size)
     {
@@ -77,7 +84,7 @@ public class OrderController {
             pageable = PageRequest.of(pageable.getPageNumber(), size, pageable.getSort());
         }
 
-        return ResponseEntity.ok(orderService.getOrdersOfCompany(companyId, pageable));
+        return ResponseEntity.ok(orderService.getOrdersOfCompany(companyId, pageable, userName, role));
     }
 
 }

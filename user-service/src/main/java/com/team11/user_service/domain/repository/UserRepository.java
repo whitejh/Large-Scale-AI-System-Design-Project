@@ -24,4 +24,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByIdAndIsDeletedFalse(Long userId);
 
     Page<User> findAllByIsDeletedFalse(Pageable pageable);
+
+    Optional<User> findByUsernameAndIsDeletedFalse(String username);
 }

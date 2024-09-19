@@ -14,6 +14,8 @@ import java.util.UUID;
 public class DeliveryRespDto {
     private UUID deliveryId;
     private DeliveryStatusEnum status;
+    private Long hubDriverId;
+    private Long companyDriverId;
     private UUID originHubId;
     private UUID destinationHubId;
     private String deliveryAddress;
@@ -23,6 +25,8 @@ public class DeliveryRespDto {
     public static DeliveryRespDto from(Delivery delivery) {
         return DeliveryRespDto.builder()
                 .deliveryId(delivery.getDeliveryId())
+                .hubDriverId(delivery.getHubDriverId())
+                .companyDriverId(delivery.getCompanyDriverId())
                 .status(delivery.getStatus())
                 .originHubId(delivery.getOriginHubId())
                 .destinationHubId(delivery.getDestinationHubId())
