@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,14 +33,14 @@ public class HubPathsController {
 
     @Operation(summary="허브 이동경로 추가", description="허브를 이동 경로를 추가합니다.")
     @PostMapping
-    //@PreAuthorize("hasRole('Master')")
+    @PreAuthorize("hasRole('Master')")
     public ResponseEntity<HubPathsRespDto> createHubPaths (@RequestBody @Valid HubPathsReqDto reqDto) {
         return ResponseEntity.ok(hubPathsService.createHubPaths(reqDto));
     }
 
     @Operation(summary="허브 이동경로 수정", description="허브의 이동 경로를 수정합니다.")
     @PutMapping("/{hubPathsId}")
-    //@PreAuthorize("hasRole('Master')")
+    @PreAuthorize("hasRole('Master')")
     public ResponseEntity<HubPathsRespDto> updateHubPaths(@RequestBody HubPathsReqDto reqDto, @PathVariable UUID hubPathsId){
         return ResponseEntity.ok(hubPathsService.updateHubPaths(reqDto, hubPathsId));
     }
@@ -74,7 +75,7 @@ public class HubPathsController {
 
     @Operation(summary="허브 이동경로 삭제", description="허브 이동경로를 삭제합니다.")
     @DeleteMapping("/{hubPathsId}")
-    //@PreAuthorize("hasRole('Master')")
+    @PreAuthorize("hasRole('Master')")
     public ResponseEntity<Void> deleteHubPaths(@PathVariable UUID hubPathsId) {
         hubPathsService.deleteHubPaths(hubPathsId);
         return ResponseEntity.noContent().build();

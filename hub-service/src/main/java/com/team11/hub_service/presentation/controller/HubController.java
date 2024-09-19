@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class HubController {
     // 권한 -> MASTER
     @Operation(summary="허브 추가", description="허브를 추가합니다.")
     @PostMapping
-    //@PreAuthorize("hasRole('Master')")
+    @PreAuthorize("hasRole('Master')")
     public ResponseEntity<HubResponseDto> createHub (@RequestBody HubRequestDto requestDto) {
         return ResponseEntity.ok(hubService.createHub(requestDto));
     }
@@ -37,7 +38,7 @@ public class HubController {
     // 권한 -> MASTER
     @Operation(summary="허브 수정", description="허브의 정보를 수정합니다.")
     @PutMapping("/{hubId}")
-    //@PreAuthorize("hasRole('Master')")
+    @PreAuthorize("hasRole('Master')")
     public ResponseEntity<HubResponseDto> updateHub(@RequestBody HubRequestDto requestDto, @PathVariable UUID hubId){
         return ResponseEntity.ok(hubService.updateHub(requestDto, hubId));
     }
@@ -71,7 +72,7 @@ public class HubController {
     // 권한 -> MASTER
     @Operation(summary="허브 삭제", description="특정 허브를 삭제합니다.")
     @DeleteMapping("/{hubId}")
-    //@PreAuthorize("hasRole('Master')")
+    @PreAuthorize("hasRole('Master')")
     public ResponseEntity<Void> deleteHub(@PathVariable UUID hubId) {
         hubService.deleteHub(hubId);
         return ResponseEntity.noContent().build();
