@@ -1,7 +1,6 @@
-package com.team11.hub_service.infrastructure.configuration;
+package com.team11.deliveryDriver_service.infrastructure.configuration;
 
-import com.team11.hub_service.application.jwt.CustomPreAuthFilter;
-
+import com.team11.deliveryDriver_service.application.jwt.CustomPreAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +23,7 @@ public class WebSecurityConfig {
     public CustomPreAuthFilter customPreAuthFilter() {
         return new CustomPreAuthFilter();
     }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {

@@ -1,7 +1,6 @@
-package com.team11.hub_service.infrastructure.configuration;
+package com.team11.delivery_service.infrastructure.configuration;
 
-import com.team11.hub_service.application.jwt.CustomPreAuthFilter;
-
+import com.team11.delivery_service.application.jwt.CustomPreAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
