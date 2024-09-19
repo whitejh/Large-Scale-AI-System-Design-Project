@@ -10,6 +10,7 @@ import com.team11.user_service.presentation.request.SignUpRequestDto;
 import com.team11.user_service.presentation.request.UpdateUserRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -32,6 +33,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
     private DeliveryDriverFeignClient deliveryDriverFeignClient;
 
     public String signUp(SignUpRequestDto requestDto) {

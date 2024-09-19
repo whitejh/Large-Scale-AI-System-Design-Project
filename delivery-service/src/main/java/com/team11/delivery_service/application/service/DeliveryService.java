@@ -155,9 +155,9 @@ public class DeliveryService {
 
     // 배송 조회 (업체 별)
     public List<DeliveryRespDto> getDeliveryByCompany(UUID companyId, Pageable pageable, String userName, String role){
-        String companyAddy = companyFeignClient.getCompanyAddy(companyId);
+        UUID hubIdByCompanyId = companyFeignClient.getHubIdByCompanyId(companyId);
 
-        Page<Delivery> deliveryList = deliveryRepository.findAllByDeliveryAddressAndDeletedIsFalseOrderByCreatedAtDesc(companyAddy, pageable).orElseThrow(
+        Page<Delivery> deliveryList = deliveryRepository.findAllByHubIdAndDeletedIsFalseOrderByCreatedAtDesc(hubIdByCompanyId, pageable).orElseThrow(
                 ()-> new IllegalArgumentException("해당 업체의 배송 내역이 존재하지 않습니다.")
         );
 

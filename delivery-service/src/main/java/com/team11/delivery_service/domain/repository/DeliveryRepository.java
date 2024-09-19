@@ -14,8 +14,7 @@ import java.util.UUID;
 public interface DeliveryRepository extends JpaRepository<Delivery, UUID> {
     Optional<Delivery> findByDeliveryIdAndDeletedIsFalse(UUID deliveryId);
 
-    @Query("SELECT d from Delivery d WHERE (d.originHubId=:hubId OR d.destinationHubId=:hubId) AND d.deleted = false")
+    @Query("SELECT d from Delivery d WHERE d.originHubId=:hubId AND d.deleted = false order by d.createdAt desc")
     Optional<Page<Delivery>> findAllByHubIdAndDeletedIsFalseOrderByCreatedAtDesc(UUID hubId, Pageable pageable);
 
-    Optional<Page<Delivery>> findAllByDeliveryAddressAndDeletedIsFalseOrderByCreatedAtDesc(String deliveryAddress, Pageable pageable);
 }

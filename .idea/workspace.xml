@@ -4,16 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6dcadb74-5c83-4092-8b6d-b97647b07725" name="Changes" comment="허브 간 이동 경로 찾는 알고리즘 구현">
+    <list default="true" id="6dcadb74-5c83-4092-8b6d-b97647b07725" name="Changes" comment="hubPaths 서비스에서 배송 경로 받아와 기록하는 기능 구현">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/dto/PathResultsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/dto/PathResultsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryPathService.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryPathService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/model/DeliveryPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/model/DeliveryPath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/repository/DeliveryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/repository/DeliveryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/presentation/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/team11/order_service/presentation/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/product-service/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/domain/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/domain/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/build/classes/java/main/com/team11/product_service/application/service/ProductService.class" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/build/classes/java/main/com/team11/product_service/application/service/ProductService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/src/main/java/com/team11/product_service/application/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/src/main/java/com/team11/product_service/application/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/application/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/application/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,7 +257,7 @@
       <option name="presentableId" value="Default" />
       <updated>1726473374503</updated>
       <workItem from="1726473375773" duration="50000" />
-      <workItem from="1726722855484" duration="40382000" />
+      <workItem from="1726722855484" duration="48344000" />
     </task>
     <task id="LOCAL-00001" summary="WebSecurityConfig 파일 수정 -&gt; api 요청 에러 해결">
       <option name="closed" value="true" />
@@ -302,7 +307,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726763040370</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="hubPaths 서비스에서 배송 경로 받아와 기록하는 기능 구현">
+      <option name="closed" value="true" />
+      <created>1726766376217</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1726766376217</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -315,6 +328,7 @@
     <MESSAGE value="2차 권한 확인 및 배송 생성 시 배송 담당자 배정 알고리즘 추가" />
     <MESSAGE value="각 모듈 별로 feign으로 데이터 주고 받을 시 생기는 오류 해결. 주문 생성 시 배송과 배송 담당자 배정까지 동시에 되도록 구현." />
     <MESSAGE value="허브 간 이동 경로 찾는 알고리즘 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="허브 간 이동 경로 찾는 알고리즘 구현" />
+    <MESSAGE value="hubPaths 서비스에서 배송 경로 받아와 기록하는 기능 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="hubPaths 서비스에서 배송 경로 받아와 기록하는 기능 구현" />
   </component>
 </project>

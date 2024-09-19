@@ -64,7 +64,7 @@ public class OrderController {
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY') or hasRole('DRIVER')")
     public ResponseEntity<OrderRespDto> getOrderDetails(@PathVariable(name="orderId") UUID orderId,
                                                         @RequestHeader(name="X-User-Name") String userName,
-                                                        @RequestHeader(name="X-Usre-Roles") String role){
+                                                        @RequestHeader(name="X-User-Roles") String role){
         return ResponseEntity.ok(orderService.getOrderDetails(orderId, userName, role));
     }
 
