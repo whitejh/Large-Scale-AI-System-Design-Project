@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,7 @@ public class ProductController {
     // 권한 -> MASTER, MANAGER(본인 허브 소속만), COMPANY(본인 업체 소속만)
     @Operation(summary="상품 추가", description="업체에 상품을 추가합니다.")
     @PostMapping
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY')")
     public ResponseEntity<ProductRespDto> createProduct(@Validated @RequestBody ProductReqDto requestDto){
         return ResponseEntity.ok(productService.createProduct(requestDto));
     }
@@ -37,6 +39,7 @@ public class ProductController {
     // 권한 -> MASTER, MANAGER(본인 허브 소속만), COMPANY(본인 업체 소속만)
     @Operation(summary="상품 수정", description="상품의 정보를 수정합니다.")
     @PutMapping("/{productId}")
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY')")
     public ResponseEntity<ProductRespDto> updateProduct(
                                                         @Validated @RequestBody ProductReqDto requestDto,
                                                         @PathVariable(name="productId") UUID productId){
@@ -46,6 +49,7 @@ public class ProductController {
     // 권한 -> MASTER, MANAGER(본인 허브 소속만), COMPANY(본인 업체 소속만)
     @Operation(summary="상품 삭제", description="특정 상품을 삭제합니다.")
     @DeleteMapping("/{productId}")
+    @PreAuthorize("hasRole('MASTER')")
     public ResponseEntity<ProductRespDto> deleteProduct(
                                                         @PathVariable(name="productId") UUID productId,
                                                         @RequestHeader(name="X-User-Name", required = false) String userName){
@@ -55,6 +59,7 @@ public class ProductController {
     // 권한 -> MASTER, MANAGER, COMPANY, DRIVER
     @Operation(summary="상품 전제 조회", description="특정 업체의 전체 상품을 조회합니다.")
     @GetMapping("/search/{companyId}")
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY') or hasRole('DRIVER')")
     public ResponseEntity<List<ProductRespDto>> getProducts(
                                                             @PathVariable(name="companyId") UUID companyId,
                                                             @PageableDefault(size=10) Pageable pageable,
@@ -71,6 +76,7 @@ public class ProductController {
     // 권한 -> MASTER, MANAGER, COMPANY, DRIVER
     @Operation(summary="상품 상세 조회", description="특정 상품을 조회합니다.")
     @GetMapping("/{productId}")
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY') or hasRole('DRIVER')")
     public ResponseEntity<ProductRespDto> searchProduct(@PathVariable(name="productId") UUID productId){
         return ResponseEntity.ok(productService.searchProduct(productId));
     }

@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,7 @@ public class DriverController {
     // 권한 -> MASTER, MANAGER(본인 허브 소속만)
     @Operation(summary="배송 담당자 추가", description="새 배송 담당자를 추가합니다.")
     @PostMapping
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
     public ResponseEntity<DriverRespDto> createDriver(@Validated @RequestBody DriverReqDto reqDto) {
         return ResponseEntity.ok(driverService.createDriver(reqDto));
     }
@@ -36,6 +38,7 @@ public class DriverController {
     // 권한 -> MASTER, MANAGER(본인 허브 소속만)
     @Operation(summary="배송 담당자 정보 수정", description="배송 담당자 정보를 수정합니다.")
     @PutMapping("/{userId}")
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
     public ResponseEntity<DriverRespDto> updateDriver(@Validated @RequestBody DriverReqDto reqDto, @PathVariable Long userId) {
         return ResponseEntity.ok(driverService.updateDriver(reqDto, userId));
     }
@@ -43,6 +46,7 @@ public class DriverController {
     // 권한 -> MASTER, MANAGER(본인 허브 소속만)
     @Operation(summary="배송 담당자 삭제", description="배송 담당자를 삭제합니다.")
     @DeleteMapping("/{userId}")
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
     public ResponseEntity<DriverRespDto> deleteDriver(@PathVariable Long userId, @RequestHeader(name="X-User-Name") String userName) {
         return ResponseEntity.ok(driverService.deleteDriver(userId, userName));
     }
@@ -50,6 +54,7 @@ public class DriverController {
     // 권한 -> MASTER, DRIVER(본인 정보만)
     @Operation(summary="배송 담당자 조회(개인)", description="배송 담당자 본인의 정보를 조회합니다.")
     @GetMapping("/search/{userId}")
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
     public ResponseEntity<DriverRespDto> getDriver(@PathVariable Long userId) {
         return ResponseEntity.ok(driverService.getDriver(userId));
     }
@@ -57,6 +62,7 @@ public class DriverController {
     // 권한 -> MASTER, MANAGER(본인 허브 소속만)
     @Operation(summary="배송 담당자 조회(허브)", description="특정 허브에 소속된 배송 담당자들의 정보를 조회합니다.")
     @GetMapping("/searchAll/{hubId}")
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
     public ResponseEntity<List<DriverRespDto>> getDrivers(@PathVariable UUID hubId,
                                                           @PageableDefault(size=10) Pageable pageable,
                                                           @RequestParam(name="size", required = false) Integer size

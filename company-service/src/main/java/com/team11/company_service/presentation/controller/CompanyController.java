@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,7 @@ public class CompanyController {
     // 권한 -> MASTER, MANAGER(본인 허브 소속만)
     @Operation(summary="업체 생성", description="새 업체를 생성합니다.")
     @PostMapping
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
     public ResponseEntity<CompanyRespDto> createCompany(@Validated @RequestBody CompanyReqDto companyReqDto) {
         return ResponseEntity.ok(companyService.createCompany(companyReqDto));
     }
@@ -36,6 +38,7 @@ public class CompanyController {
     // 권한 -> MASTER, MANAGER(본인 허브 소속만), COMPANY(본인 업체 소속만)
     @Operation(summary="업체 수정", description="업체를 수정합니다.")
     @PutMapping("/{companyId}")
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY')")
     public ResponseEntity<CompanyRespDto> updateCompany(
                                                         @Validated @RequestBody CompanyReqDto companyReqDto,
                                                         @PathVariable(name="companyId") UUID companyId) {
@@ -45,6 +48,7 @@ public class CompanyController {
     // 권한 -> MASTER, MANAGER(본인 허브 소속만)
     @Operation(summary="업체 삭제", description="업체를 삭제합니다.")
     @DeleteMapping("/{companyId}")
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
     public ResponseEntity<CompanyRespDto> deleteCompany(
                                                         @PathVariable(name="companyId") UUID companyId,
                                                         @RequestHeader(name="X-User-Name") String userName) {
@@ -54,6 +58,7 @@ public class CompanyController {
     // 권한 -> MASTER, MANAGER, COMPANY, DRIVER
     @Operation(summary="허브 소속 업체 조회", description="해당 허브에 속한 업체들을 전체 조회합니다.")
     @GetMapping("/search/{hubId}")
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY') or hasRole('DRIVER')")
     public ResponseEntity<List<CompanyRespDto>> getCompanies(
                                                             @PathVariable(name="hubId") UUID hubId,
                                                             @PageableDefault(size=10) Pageable pageable,
@@ -70,6 +75,7 @@ public class CompanyController {
     // 권한 -> MASTER, MANAGER, COMPANY, DRIVER
     @Operation(summary="업체 상세 조회", description="특정 업체를 상세 조회합니다.")
     @GetMapping("/{companyId}")
+    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY') or hasRole('DRIVER')")
     public ResponseEntity<CompanyRespDto> getCompanyDetails(@PathVariable(name="companyId") UUID companyId) {
         return ResponseEntity.ok(companyService.getCompanyDetails(companyId));
     }
