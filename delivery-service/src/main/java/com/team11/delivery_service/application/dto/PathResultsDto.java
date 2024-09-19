@@ -1,6 +1,5 @@
 package com.team11.delivery_service.application.dto;
 
-import com.team11.hub_service.domain.model.HubPaths;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

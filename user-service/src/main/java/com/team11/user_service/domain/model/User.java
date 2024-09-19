@@ -35,7 +35,6 @@ public class User {
     private String email;
 
     @Column(name="slack_id")
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID slackId;
 
     @Column(name="role")

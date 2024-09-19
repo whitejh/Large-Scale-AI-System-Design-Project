@@ -4,18 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6dcadb74-5c83-4092-8b6d-b97647b07725" name="Changes" comment="각 모듈 별로 feign으로 데이터 주고 받을 시 생기는 오류 해결. 주문 생성 시 배송과 배송 담당자 배정까지 동시에 되도록 구현.">
-      <change afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/dto/PathResultsDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryPathService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/infrastructure/feign/HubPathsFeignClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/application/dto/PathResultsDto.java" afterDir="false" />
+    <list default="true" id="6dcadb74-5c83-4092-8b6d-b97647b07725" name="Changes" comment="허브 간 이동 경로 찾는 알고리즘 구현">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/dto/PathResultsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/dto/PathResultsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryPathService.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryPathService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/application/service/DeliveryService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/model/DeliveryPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/delivery-service/src/main/java/com/team11/delivery_service/domain/model/DeliveryPath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/application/service/HubPathsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/application/service/HubPathsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/domain/repository/HubPathsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/domain/repository/HubPathsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/presentation/controller/HubPathsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hub-service/src/main/java/com/team11/hub_service/presentation/controller/HubPathsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/8.10/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/domain/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/team11/user_service/domain/model/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,7 +170,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.HubServiceApplication">
+  <component name="RunManager" selected="Spring Boot.DeliveryServiceApplication">
     <configuration name="CompanyServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="company-service.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.team11.company_service.CompanyServiceApplication" />
@@ -254,7 +252,7 @@
       <option name="presentableId" value="Default" />
       <updated>1726473374503</updated>
       <workItem from="1726473375773" duration="50000" />
-      <workItem from="1726722855484" duration="36783000" />
+      <workItem from="1726722855484" duration="40382000" />
     </task>
     <task id="LOCAL-00001" summary="WebSecurityConfig 파일 수정 -&gt; api 요청 에러 해결">
       <option name="closed" value="true" />
@@ -296,7 +294,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726752056831</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="허브 간 이동 경로 찾는 알고리즘 구현">
+      <option name="closed" value="true" />
+      <created>1726763040370</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1726763040370</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -308,6 +314,7 @@
     <MESSAGE value="@PreAuthorize 사용해 권한 확인 추가" />
     <MESSAGE value="2차 권한 확인 및 배송 생성 시 배송 담당자 배정 알고리즘 추가" />
     <MESSAGE value="각 모듈 별로 feign으로 데이터 주고 받을 시 생기는 오류 해결. 주문 생성 시 배송과 배송 담당자 배정까지 동시에 되도록 구현." />
-    <option name="LAST_COMMIT_MESSAGE" value="각 모듈 별로 feign으로 데이터 주고 받을 시 생기는 오류 해결. 주문 생성 시 배송과 배송 담당자 배정까지 동시에 되도록 구현." />
+    <MESSAGE value="허브 간 이동 경로 찾는 알고리즘 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="허브 간 이동 경로 찾는 알고리즘 구현" />
   </component>
 </project>

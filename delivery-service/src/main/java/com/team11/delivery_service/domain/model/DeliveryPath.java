@@ -16,6 +16,9 @@ import java.util.UUID;
 @Table(name = "p_delivery_paths")
 public class DeliveryPath extends BaseEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name="delivery_id")
     private UUID deliveryId;
 
@@ -44,7 +47,7 @@ public class DeliveryPath extends BaseEntity {
     @Enumerated(value=EnumType.STRING)
     private DeliveryStatusEnum status;
 
-    public DeliveryPath from(PathResultsDto dto, UUID deliveryId, int sequence, DeliveryStatusEnum status) {
+    public static DeliveryPath from(PathResultsDto dto, UUID deliveryId, int sequence, DeliveryStatusEnum status) {
         return DeliveryPath.builder()
                 .deliveryId(deliveryId)
                 .sequenceNumber(sequence)

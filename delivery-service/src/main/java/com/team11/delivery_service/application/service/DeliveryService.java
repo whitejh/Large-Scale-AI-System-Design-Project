@@ -45,7 +45,6 @@ public class DeliveryService {
 
     @Autowired
     private DeliveryPathService deliveryPathService;
-    private HubPathsFeignClient hubPathsFeignClient;
 
     // 배송 생성
     @Transactional
@@ -79,14 +78,14 @@ public class DeliveryService {
         // 배송 생성
         Delivery delivery = new Delivery(hubDriverId, companyDriverId, originHubId, destinationHubId, companyAddy, DeliveryStatusEnum.PENDING, recipientName, recipientSlackId);
 
-        // 배송 기록
-        // 출발 허브 ID, 도착 허브 ID, 시간, 거리 List 형식으로 받아와서 반복문 돌아 배송 기록 생성
-        List<PathResultsDto> paths = hubPathsFeignClient.getHubPaths(originHubId, destinationHubId);
-        deliveryPathService.createDeliveryPath(paths);
-
         delivery.setCreated(dto.getUserName());
 
         deliveryRepository.save(delivery);
+
+        // 배송 기록
+        // 출발 허브 ID, 도착 허브 ID, 시간, 거리 List 형식으로 받아와서 반복문 돌아 배송 기록 생성
+        List<PathResultsDto> paths = hubPathsFeignClient.getHubPaths(originHubId, destinationHubId);
+        deliveryPathService.createDeliveryPath(paths, delivery.getDeliveryId(), delivery.getStatus());
 
         return delivery.getDeliveryId();
 
