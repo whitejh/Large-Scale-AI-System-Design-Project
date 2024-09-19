@@ -7,6 +7,7 @@ import com.team11.hub_service.domain.repository.HubRepository;
 import com.team11.hub_service.infrastructure.feign.UserFeignClient;
 import com.team11.hub_service.presentation.request.HubRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ public class HubService {
 
     private final HubRepository hubRepository;
 
+    @Autowired
     private final UserFeignClient userClient;
 
     public String getUserInfo(String userId) {

@@ -31,7 +31,7 @@ public class DriverController {
     @Operation(summary="배송 담당자 추가", description="새 배송 담당자를 추가합니다.")
     @PostMapping
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
-    public ResponseEntity<DriverRespDto> createDriver(@Validated @RequestBody DriverReqDto reqDto) {
+    public ResponseEntity<DriverRespDto> createDriver(@RequestBody DriverReqDto reqDto) {
         return ResponseEntity.ok(driverService.createDriver(reqDto));
     }
 
@@ -39,7 +39,7 @@ public class DriverController {
     @Operation(summary="배송 담당자 정보 수정", description="배송 담당자 정보를 수정합니다.")
     @PutMapping("/{userId}")
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
-    public ResponseEntity<DriverRespDto> updateDriver(@Validated @RequestBody DriverReqDto reqDto, @PathVariable Long userId) {
+    public ResponseEntity<DriverRespDto> updateDriver(@RequestBody DriverReqDto reqDto, @PathVariable Long userId) {
         return ResponseEntity.ok(driverService.updateDriver(reqDto, userId));
     }
 

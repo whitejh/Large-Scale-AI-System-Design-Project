@@ -7,6 +7,7 @@ import com.team11.deliveryDriver_service.infrastructure.feign.HubFeignClient;
 import com.team11.deliveryDriver_service.presentation.request.DriverReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class DriverService {
 
     private final DriverRepository driverRepository;
 
+    @Autowired
     private HubFeignClient hubFeignClient;
 
     // 배송 담당자 추가

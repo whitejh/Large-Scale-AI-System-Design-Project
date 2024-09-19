@@ -8,6 +8,6 @@ import java.util.UUID;
 
 @FeignClient(name="hub-service")
 public interface HubFeignClient {
-    @GetMapping("/api/hubs/check/{hubId}")
+    @GetMapping("api/hubs/check/{hubId}")
     public boolean isHubIdExist(@PathVariable("hubId") UUID hubId);
 }

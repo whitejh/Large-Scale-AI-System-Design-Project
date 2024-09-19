@@ -8,6 +8,7 @@ import com.team11.company_service.infrastructure.feign.UserFeignClient;
 import com.team11.company_service.presentation.request.CompanyReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,10 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
 
+    @Autowired
     private HubFeignClient hubFeignClient;
+
+    @Autowired
     private UserFeignClient userFeignClient;
 
 
@@ -133,7 +137,7 @@ public class CompanyService {
     // 업체의 소속 허브 아이디 반환
     public UUID getHubIdByCompanyId(UUID companyId) {
         Company company= companyRepository.findByCompanyIdAndDeletedIsFalse(companyId).orElseThrow(
-                ()-> new IllegalArgumentException("해당 업체의 소속 허브를 찾을 수 없습니다.")
+                ()-> new IllegalArgumentException("해당 업체를 찾을 수 없습니다.")
         );
 
         UUID hubId = company.getHubId();

@@ -95,10 +95,10 @@ public class ProductController {
     }
 
     @Operation(summary="상품 재고 갱신", description="특정 상품의 재고를 갱신합니다.")
-    @PutMapping("/stock/{productId}")
+    @PutMapping("/stockUpdate/{productId}/{stock}")
     public void updateStockByProductId(
                                         @PathVariable(name="productId") UUID productId,
-                                       @RequestParam(name="stock") int stock){
+                                       @PathVariable(name="stock") int stock){
         productService.updateStock(productId, stock);
     }
 }

@@ -17,6 +17,6 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     @Query("SELECT d.userId FROM Driver d WHERE d.type='HUB_DRIVER' AND d.deleted = False")
     Optional<List<Long>> findHubDrivers();
 
-    @Query("SELECT d.userId FROM Driver d WHERE d.hubId=:hubId AND d.type='COMPANY_DRIVER' AND d.deleted = False")
+    @Query("SELECT d.userId FROM Driver d WHERE d.hubId=:hubId AND d.deleted = False")
     Optional<List<Long>> findCompanyDrivers(UUID hubId);
 }

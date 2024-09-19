@@ -31,7 +31,7 @@ public class OrderController {
     @Operation(summary="주문 생성", description="새 주문을 생성합니다.")
     @PostMapping
     @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER') or hasRole('COMPANY') or hasRole('DRIVER')")
-    public ResponseEntity<OrderRespDto> createOrder(@Validated @RequestBody OrderReqDto orderReqDto,
+    public ResponseEntity<OrderRespDto> createOrder( @RequestBody OrderReqDto orderReqDto,
                                                     @RequestHeader(name="X-User-Name") String userName) {
         return ResponseEntity.ok(orderService.createOrder(orderReqDto, userName));
     }

@@ -30,7 +30,7 @@ public class CompanyController {
     // 권한 -> MASTER, MANAGER(본인 허브 소속만)
     @Operation(summary="업체 생성", description="새 업체를 생성합니다.")
     @PostMapping
-    @PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
+    //@PreAuthorize("hasRole('MASTER') or hasRole('MANAGER')")
     public ResponseEntity<CompanyRespDto> createCompany(@Validated @RequestBody CompanyReqDto companyReqDto,
                                                         @RequestHeader(name="X-User-Name") String userName,
                                                         @RequestHeader(name="X-User-Roles") String role) {

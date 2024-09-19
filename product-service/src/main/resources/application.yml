@@ -21,3 +21,7 @@ server:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
+service:
+  jwt:
+    secret-key: "WnN3Q2FjQzRrNFl0V1d1TWp0RE5Xemw2RkE0WVYzS2VsR2xpUVF6M0x6dFNXbnc="

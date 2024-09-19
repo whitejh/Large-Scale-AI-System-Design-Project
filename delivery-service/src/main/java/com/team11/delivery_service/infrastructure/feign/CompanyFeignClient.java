@@ -9,9 +9,9 @@ import java.util.UUID;
 @FeignClient(name="company-service")
 public interface CompanyFeignClient {
     @GetMapping("/api/companies/checkHub/{companyId}")
-    public UUID getHubIdByCompanyId(@PathVariable UUID companyId);
+    public UUID getHubIdByCompanyId(@PathVariable(name="companyId") UUID companyId);
 
     @GetMapping("/api/companies/getCompanyAddy/{companyId}")
-    public String getCompanyAddy(@PathVariable UUID companyId);
+    public String getCompanyAddy(@PathVariable(name="companyId") UUID companyId);
 
 }

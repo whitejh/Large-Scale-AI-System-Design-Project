@@ -1,6 +1,7 @@
 package com.team11.delivery_service.presentation.controller;
 
 import com.team11.delivery_service.application.dto.DeliveryRespDto;
+import com.team11.delivery_service.application.dto.OrderToDeliveryDto;
 import com.team11.delivery_service.application.service.DeliveryService;
 import com.team11.delivery_service.presentation.request.RecipientReqDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,14 +30,10 @@ public class DeliveryController {
 
     // 주문 생성 시 자동으로 생성
     @Operation(summary="배송 생성", description="새 배송을 생성합니다.")
-    @PostMapping
-    public UUID createDelivery(UUID supplyCompanyId,
-                               UUID receiveCompanyId,
-                               String recipientName,
-                               UUID recipientSlackId,
-                               String userName)
+    @PostMapping("/createDelivery")
+    public UUID createDelivery(@RequestBody OrderToDeliveryDto dto)
     {
-        return deliveryService.createDelivery(supplyCompanyId, receiveCompanyId, recipientName, recipientSlackId, userName);
+        return deliveryService.createDelivery(dto);
     }
 
     // 권한 -> MASTER, MANAGER(본인 허브 소속만), DRIVER(본인 배송 담당만)
@@ -92,7 +89,7 @@ public class DeliveryController {
             pageable = PageRequest.of(pageable.getPageNumber(), size, pageable.getSort());
         }
 
-        return ResponseEntity.ok(deliveryService.getDeliveryByCompany(companyId, pageable));
+        return ResponseEntity.ok(deliveryService.getDeliveryByCompany(companyId, pageable, userName, role));
     }
 
     // 권한 -> MASTER, DRIVER(본인 배송 담당만)

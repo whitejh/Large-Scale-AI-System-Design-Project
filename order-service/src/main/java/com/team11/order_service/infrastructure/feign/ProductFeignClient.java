@@ -9,9 +9,9 @@ import java.util.UUID;
 
 @FeignClient(name="product-service")
 public interface ProductFeignClient {
-    @GetMapping("api/products/stock/{productId}")
+    @GetMapping("/api/products/stock/{productId}")
     int getStockByProductId(@PathVariable("productId") UUID productId);
 
-    @PutMapping("api/products/stock/{productId}")
-    void updateStockByProductId(@PathVariable("productId") UUID productId, int stock);
+    @PutMapping("/api/products/stockUpdate/{productId}/{stock}")
+    void updateStockByProductId(@PathVariable("productId") UUID productId, @PathVariable(name="stock") int stock);
 }

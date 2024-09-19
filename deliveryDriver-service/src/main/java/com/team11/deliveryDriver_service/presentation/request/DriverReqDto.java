@@ -13,12 +13,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DriverReqDto {
-    @NotBlank
     private Long userId;
-    @NotBlank
     private UUID slackId;
 
-    @NotBlank
     private DriverTypeEnum type;
     private UUID hubId;
 

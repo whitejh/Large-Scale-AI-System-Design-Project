@@ -12,17 +12,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderReqDto {
-    @NotBlank
     private UUID productId;
-    @NotBlank(message="상품의 개수를 꼭 입력해주세요.")
     private int quantity;
 
     private UUID supplyCompany;
     private UUID receiveCompany;
 
-    @NotBlank
     private String recipientName;
-    @NotBlank
     private UUID recipientSlackId;
 
     public static Order toOrder(OrderReqDto reqDtoDto) {

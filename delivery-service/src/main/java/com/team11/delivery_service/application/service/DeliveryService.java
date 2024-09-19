@@ -1,6 +1,7 @@
 package com.team11.delivery_service.application.service;
 
 import com.team11.delivery_service.application.dto.DeliveryRespDto;
+import com.team11.delivery_service.application.dto.OrderToDeliveryDto;
 import com.team11.delivery_service.domain.model.Delivery;
 import com.team11.delivery_service.domain.model.DeliveryStatusEnum;
 import com.team11.delivery_service.domain.repository.DeliveryPathRepository;
@@ -11,6 +12,7 @@ import com.team11.delivery_service.infrastructure.feign.UserFeignClient;
 import com.team11.delivery_service.presentation.request.RecipientReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,31 +32,41 @@ public class DeliveryService {
     private final DeliveryRepository deliveryRepository;
     private final DeliveryPathRepository deliveryPathRepository;
 
+    @Autowired
     private UserFeignClient userFeignClient;
+    @Autowired
     private CompanyFeignClient companyFeignClient;
+    @Autowired
     private DriverFeignClient driverFeignClient;
 
     // 배송 생성
     @Transactional
-    public UUID createDelivery(UUID supplyCompanyId, UUID receiveCompanyId, String recipientName, UUID recipientSlackId, String userName){
+    public UUID createDelivery(OrderToDeliveryDto dto){
         // 공급 업체ID, 수령 업체ID로 각각 소속된 허브 ID 받아오기
-        UUID originHubId = companyFeignClient.getHubIdByCompanyId(supplyCompanyId);
-        UUID destinationHubId = companyFeignClient.getHubIdByCompanyId(receiveCompanyId);
+        UUID originHubId = companyFeignClient.getHubIdByCompanyId(dto.getSupplyCompanyId());
+        UUID destinationHubId = companyFeignClient.getHubIdByCompanyId(dto.getReceiveCompanyId());
+
+        String recipientName = dto.getRecipientName();
+        UUID recipientSlackId = dto.getRecipientSlackId();
 
         // 수령 업체 ID로 배송지 주소 받아오기
-        String companyAddy = companyFeignClient.getCompanyAddy(receiveCompanyId);
+        String companyAddy = companyFeignClient.getCompanyAddy(dto.getReceiveCompanyId());
 
         // 배송 담당자 배정
         // 허브 배송 담당자 10명 중 무작위로 한 명을 고르는 알고리즘
         List<Long> hubDrivers = driverFeignClient.getHubDrivers();
 
         Random random = new Random();
-        int randomIndex = random.nextInt(hubDrivers.size());
+        int randomIndex = 0;
+
+        randomIndex = random.nextInt(hubDrivers.size());
         Long hubDriverId = hubDrivers.get(randomIndex);
 
         // 배송 담당자 10명 중 무작위로 한 명을 고르는 알고리즘
-        List<Long> companyDrivers = driverFeignClient.getCompanyDrivers(receiveCompanyId);
-        Long companyDriverId = companyDrivers.get(randomIndex);
+        List<Long> companyDrivers = driverFeignClient.getCompanyDrivers(destinationHubId);
+        int randomIndex2 = 0;
+        randomIndex2 = random.nextInt(companyDrivers.size());
+        Long companyDriverId = companyDrivers.get(randomIndex2);
 
         // 배송 생성
         Delivery delivery = new Delivery(hubDriverId, companyDriverId, originHubId, destinationHubId, companyAddy, DeliveryStatusEnum.PENDING, recipientName, recipientSlackId);
@@ -64,7 +76,7 @@ public class DeliveryService {
 
 
 
-        delivery.setCreated(userName);
+        delivery.setCreated(dto.getUserName());
 
         deliveryRepository.save(delivery);
 

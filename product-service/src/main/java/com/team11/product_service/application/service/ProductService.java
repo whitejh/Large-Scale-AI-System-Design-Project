@@ -9,6 +9,7 @@ import com.team11.product_service.infrastructure.feign.UserFeignClient;
 import com.team11.product_service.presentation.request.ProductReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +27,12 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    private final CompanyFeignClient companyFeignClient;
-    private final HubFeignClient hubFeignClient;
-    private final UserFeignClient userFeignClient;
+    @Autowired
+    private CompanyFeignClient companyFeignClient;
+    @Autowired
+    private HubFeignClient hubFeignClient;
+    @Autowired
+    private UserFeignClient userFeignClient;
 
     // 상품 추가
     @Transactional

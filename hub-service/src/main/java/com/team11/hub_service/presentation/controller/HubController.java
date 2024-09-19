@@ -85,6 +85,4 @@ public class HubController {
         return hubService.isHubIdExist(hubId); // true / false
     }
 
-
-
 }
