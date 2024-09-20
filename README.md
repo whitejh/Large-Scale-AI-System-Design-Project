@@ -49,7 +49,7 @@
 
 
 ## 📝 ERD Diagram
-[Image] : erd 이미지 추가하기
+![Erd](https://github.com/whitejh/Large-Scale-AI-System-Design-Project/blob/master/erd.jpg)
 
 ## 🛠️ 개발 환경
 - **Backend**
